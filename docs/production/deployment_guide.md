@@ -45,6 +45,10 @@ gcloud builds submit --tag us-central1-docker.pkg.dev/rootly-18a49/rootly-docker
 
 # 5. Apply Knative service configuration
 gcloud run services replace gcp-service.yaml --region=us-central1
+
+# 6. Local Docker Verification
+# Build and run the app locally inside a Docker container using Compose:
+docker compose up --build
 ```
 
 ---
