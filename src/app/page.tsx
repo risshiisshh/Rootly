@@ -71,16 +71,7 @@ export default function LandingPage() {
         {/* Technical dot grid overlay */}
         <DotGrid />
 
-        {/* Scanline effect */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-          <div
-            className="absolute left-0 right-0 h-[2px]"
-            style={{
-              background: 'linear-gradient(to right, transparent, rgba(145,216,131,0.08), transparent)',
-              animation: 'scanline 6s linear infinite',
-            }}
-          />
-        </div>
+
 
         {/* Content */}
         <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -128,11 +119,7 @@ export default function LandingPage() {
           {/* Right — Instrument widget */}
           <div className="lg:col-span-6 hidden lg:block">
             <div className="glass-card p-8 rounded-lg border border-primary/10 relative overflow-hidden">
-              {/* Scanline */}
-              <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-                <div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/10 to-transparent"
-                  style={{ animation: 'scanline 4s linear infinite' }} />
-              </div>
+
 
               <div className="flex justify-between items-start mb-8">
                 <div>
