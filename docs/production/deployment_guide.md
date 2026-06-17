@@ -32,7 +32,7 @@ If you need to deploy the application manually from your workstation:
 gcloud auth login
 
 # 2. Set active project
-gcloud config set project YOUR_PROJECT_ID
+gcloud config set project rootly-18a49
 
 # 3. Create Artifact Registry repository (one-time setup)
 gcloud artifacts repositories create rootly-docker-repo \
@@ -41,7 +41,7 @@ gcloud artifacts repositories create rootly-docker-repo \
     --description="Rootly Docker Repository"
 
 # 4. Build and Push Container Image using Cloud Build
-gcloud builds submit --tag us-central1-docker.pkg.dev/YOUR_PROJECT_ID/rootly-docker-repo/rootly:latest
+gcloud builds submit --tag us-central1-docker.pkg.dev/rootly-18a49/rootly-docker-repo/rootly:latest
 
 # 5. Apply Knative service configuration
 gcloud run services replace gcp-service.yaml --region=us-central1
@@ -75,7 +75,7 @@ gcloud run services replace gcp-service.yaml --region=us-central1
 - **Resolution**:
   Run this `gcloud` command to grant the required Logs Writer role to the build service account:
   ```bash
-  gcloud projects add-iam-policy-binding YOUR_PROJECT_ID \
+  gcloud projects add-iam-policy-binding rootly-18a49 \
       --member="serviceAccount:730949223305-compute@developer.gserviceaccount.com" \
       --role="roles/logging.logWriter"
   ```

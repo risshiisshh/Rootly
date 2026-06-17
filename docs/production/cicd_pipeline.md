@@ -24,7 +24,7 @@ Docker container images compiled during deployment are stored in Google Artifact
 
 - **Repository Type**: Docker container repository.
 - **Region**: `us-central1` (located near the Cloud Run instances to ensure fast deployment pull times).
-- **Naming Convention**: `us-central1-docker.pkg.dev/PROJECT_ID/rootly-docker-repo/rootly`.
+- **Naming Convention**: `us-central1-docker.pkg.dev/rootly-18a49/rootly-docker-repo/rootly`.
 - **Retention Policy**: Standard policy retaining the last 10 build images. Unused older tags are cleaned up automatically to manage storage costs.
 
 ---
