@@ -72,7 +72,6 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body
         className={`${geist.variable} ${geistMono.variable} ${hanken.variable} antialiased bg-background text-on-surface`}
