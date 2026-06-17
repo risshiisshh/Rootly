@@ -59,7 +59,7 @@ export default function LandingPage() {
           muted
           loop
           playsInline
-          className="absolute inset-0 w-full h-full object-cover brightness-[0.85] contrast-[1.1]"
+          className="absolute inset-0 w-full h-full object-cover brightness-[0.5] contrast-[1.1]"
           aria-hidden="true"
         >
           <source
