@@ -69,3 +69,14 @@ gcloud run services replace gcp-service.yaml --region=us-central1
 - **Diagnostics**:
   1. Check GCP Cloud Run logs. If cold starts are high, verify **Startup CPU Boost** is set to `true` in `gcp-service.yaml`.
   2. If Directions API is failing, verify your GCP Billing is active and Maps Directions API has no key restrictions blocking requests.
+
+### Incident D: Cloud Build Logging Permission Errors
+- **Symptom**: Cloud Build fails with: `The service account [PROJECT_NUM]-compute@developer.gserviceaccount.com does not have permission to write the logs.`
+- **Resolution**:
+  Run this `gcloud` command to grant the required Logs Writer role to the build service account:
+  ```bash
+  gcloud projects add-iam-policy-binding YOUR_PROJECT_ID \
+      --member="serviceAccount:730949223305-compute@developer.gserviceaccount.com" \
+      --role="roles/logging.logWriter"
+  ```
+
