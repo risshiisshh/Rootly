@@ -1,0 +1,124 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ─── Helper functions ───────────────────────────────────────────────
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return request.auth.uid == uid;
+    }
+
+    function isValidString(val, maxLen) {
+      return val is string && val.size() > 0 && val.size() <= maxLen;
+    }
+
+    function isValidNumber(val, min, max) {
+      return val is number && val >= min && val <= max;
+    }
+
+    // ─── Users ──────────────────────────────────────────────────────────
+    match /users/{uid} {
+      allow read: if isAuthenticated() && isOwner(uid);
+      allow create: if isAuthenticated() && isOwner(uid)
+        && isValidString(request.resource.data.email, 256)
+        && isValidNumber(request.resource.data.carbonScore, 0, 100)
+        && isValidNumber(request.resource.data.weeklyGoalKg, 1, 10000);
+      allow update: if isAuthenticated() && isOwner(uid)
+        && (!request.resource.data.diff(resource.data).affectedKeys()
+            .hasAny(['uid', 'email', 'createdAt']));
+      allow delete: if false; // Never delete user records via client
+    }
+
+    // ─── Activities ──────────────────────────────────────────────────────
+    match /activities/{activityId} {
+      allow read: if isAuthenticated() && isOwner(resource.data.userId);
+      allow create: if isAuthenticated()
+        && isOwner(request.resource.data.userId)
+        && isValidString(request.resource.data.activity, 200)
+        && isValidNumber(request.resource.data.quantity, 0, 100000)
+        && isValidNumber(request.resource.data.emission, 0, 100000)
+        && request.resource.data.category in ['transport', 'food', 'energy', 'lifestyle', 'other'];
+      allow update: if false; // Activities are immutable — delete and re-create
+      allow delete: if isAuthenticated() && isOwner(resource.data.userId);
+    }
+
+    // ─── Voice Logs ───────────────────────────────────────────────────────
+    match /voiceLogs/{logId} {
+      allow read: if isAuthenticated() && isOwner(resource.data.userId);
+      allow create: if isAuthenticated()
+        && isOwner(request.resource.data.userId)
+        && isValidString(request.resource.data.transcript, 10000)
+        && isValidNumber(request.resource.data.audioLengthSeconds, 0, 3600);
+      allow update: if isAuthenticated() && isOwner(resource.data.userId);
+      allow delete: if isAuthenticated() && isOwner(resource.data.userId);
+    }
+
+    // ─── Conversations ────────────────────────────────────────────────────
+    match /conversations/{conversationId} {
+      allow read, delete: if isAuthenticated()
+        && isOwner(resource.data.userId);
+      allow create: if isAuthenticated()
+        && isOwner(request.resource.data.userId);
+      allow update: if isAuthenticated()
+        && isOwner(resource.data.userId)
+        && isOwner(request.resource.data.userId);
+
+      match /messages/{messageId} {
+        allow read: if isAuthenticated()
+          && get(/databases/$(database)/documents/conversations/$(conversationId)).data.userId == request.auth.uid;
+        allow create: if isAuthenticated()
+          && get(/databases/$(database)/documents/conversations/$(conversationId)).data.userId == request.auth.uid
+          && isValidString(request.resource.data.content, 20000)
+          && request.resource.data.role in ['user', 'assistant'];
+        allow update, delete: if false; // Chat messages are immutable
+      }
+    }
+
+    // ─── Weekly Reports ────────────────────────────────────────────────────
+    match /weeklyReports/{reportId} {
+      allow read: if isAuthenticated() && isOwner(resource.data.userId);
+      allow create: if isAuthenticated() && isOwner(request.resource.data.userId);
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    // ─── Goals ─────────────────────────────────────────────────────────────
+    match /goals/{goalId} {
+      allow read: if isAuthenticated() && isOwner(resource.data.userId);
+      allow create: if isAuthenticated()
+        && isOwner(request.resource.data.userId)
+        && isValidString(request.resource.data.title, 200)
+        && isValidNumber(request.resource.data.targetReductionKg, 0, 100000)
+        && request.resource.data.status in ['active', 'completed', 'paused'];
+      allow update: if isAuthenticated() && isOwner(resource.data.userId)
+        && (!request.resource.data.diff(resource.data).affectedKeys()
+            .hasAny(['userId', 'createdAt']));
+      allow delete: if isAuthenticated() && isOwner(resource.data.userId);
+    }
+
+    // ─── Route Comparisons ─────────────────────────────────────────────────
+    match /routeComparisons/{comparisonId} {
+      allow read: if isAuthenticated() && isOwner(resource.data.userId);
+      allow create: if isAuthenticated() && isOwner(request.resource.data.userId);
+      allow update, delete: if false;
+    }
+
+    // ─── Notifications ─────────────────────────────────────────────────────
+    match /notifications/{notificationId} {
+      allow read: if isAuthenticated() && isOwner(resource.data.userId);
+      allow create: if false; // Created by Cloud Functions only
+      allow update: if isAuthenticated() && isOwner(resource.data.userId)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read']);
+      allow delete: if isAuthenticated() && isOwner(resource.data.userId);
+    }
+
+    // ─── Default deny ──────────────────────────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,259 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Google Fonts Import ──────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+/* ─── Material Symbols Outlined ─────────────────────────────────────────────── */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  vertical-align: middle;
+  user-select: none;
+}
+
+/* ─── Base Layer ─────────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-on-surface font-sans;
+    font-family: 'Hanken Grotesk', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #41493d;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #91d883;
+  }
+
+  /* Selection */
+  ::selection {
+    background-color: rgba(145, 216, 131, 0.25);
+    color: #e3e3df;
+  }
+
+  /* Focus visible */
+  :focus-visible {
+    outline: 2px solid #91d883;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Focus not visible */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+/* ─── Components Layer ───────────────────────────────────────────────────── */
+@layer components {
+  /* Glass module — primary glass surface */
+  .glass-card {
+    background: rgba(30, 32, 30, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .glass-card:hover {
+    border-color: rgba(145, 216, 131, 0.2);
+    background: rgba(13, 83, 14, 0.1);
+  }
+
+  /* Glass panel — elevated surface */
+  .glass-panel {
+    background: rgba(18, 20, 18, 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  }
+
+  /* Primary glass — accent surface */
+  .glass-primary {
+    background: rgba(13, 83, 14, 0.3);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(145, 216, 131, 0.2);
+  }
+
+  /* Obsidian card — opaque dark surface */
+  .obsidian-card {
+    background: #1a1c1a;
+    border: 1px solid rgba(145, 216, 131, 0.05);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .obsidian-card:hover {
+    border-color: rgba(145, 216, 131, 0.2);
+    background: #1e201e;
+  }
+
+  /* Kinetic gradient bar */
+  .kinetic-bar {
+    height: 8px;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, #0d530e 0%, #91d883 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kinetic-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: shimmer 2s infinite;
+  }
+
+  /* Dot grid background pattern */
+  .dot-grid {
+    background-image: radial-gradient(rgba(145, 216, 131, 0.07) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* Carbon glow text */
+  .carbon-glow {
+    text-shadow: 0 0 20px rgba(145, 216, 131, 0.3);
+  }
+
+  /* Recessed input */
+  .recessed-input {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: border-color 0.3s ease;
+  }
+
+  .recessed-input:focus {
+    outline: none;
+    border-color: #91d883;
+    box-shadow: 0 0 0 1px rgba(145, 216, 131, 0.3);
+  }
+
+  /* Mic glow animation */
+  .mic-glow {
+    box-shadow: 0 0 20px rgba(145, 216, 131, 0.3);
+    animation: micPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Active recording */
+  .recording-active {
+    box-shadow: 0 0 0 0 rgba(145, 216, 131, 0.4);
+    animation: recordingRing 1.5s ease-out infinite;
+  }
+
+  /* No scrollbar utility */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Gradient text */
+  .text-gradient {
+    background: linear-gradient(135deg, #91d883 0%, #acf59d 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Safe area padding for mobile */
+  .safe-area-inset-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+/* ─── Utilities Layer ────────────────────────────────────────────────────── */
+@layer utilities {
+  .animation-delay-100 { animation-delay: 100ms; }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-400 { animation-delay: 400ms; }
+  .animation-delay-500 { animation-delay: 500ms; }
+}
+
+/* ─── Keyframe Animations ───────────────────────────────────────────────── */
+@keyframes scanline {
+  0% { top: -2px; }
+  100% { top: 100%; }
+}
+
+@keyframes shimmer {
+  100% { left: 100%; }
+}
+
+@keyframes micPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+
+@keyframes recordingRing {
+  0% { box-shadow: 0 0 0 0 rgba(145, 216, 131, 0.4); }
+  100% { box-shadow: 0 0 0 24px rgba(145, 216, 131, 0); }
+}
+
+@keyframes waveform {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.4); }
+}
+
+@keyframes carbonDash {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ─── Motion Preferences ─────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

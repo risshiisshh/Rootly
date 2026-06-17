@@ -1,0 +1,403 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Rootly | Modular Intelligence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        :root {
+            --glass-fill: rgba(13, 83, 14, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+        body {
+            background-color: #121412;
+            color: #e3e3df;
+            font-family: 'Hanken Grotesk', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-card {
+            background: var(--glass-fill);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(145, 216, 131, 0.3);
+            background: rgba(13, 83, 14, 0.15);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .kinetic-bar {
+            height: 8px;
+            border-radius: 9999px;
+            background: linear-gradient(90deg, #0d530e 0%, #91d883 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .kinetic-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            100% { left: 100%; }
+        }
+        .recessed-input {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: border-color 0.3s ease;
+        }
+        .recessed-input:focus {
+            outline: none;
+            border-color: #91d883;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed": "#acf59d",
+                      "on-tertiary-container": "#bbb79c",
+                      "on-surface": "#e3e3df",
+                      "tertiary": "#ccc7ac",
+                      "on-primary-fixed-variant": "#0c530e",
+                      "surface-tint": "#91d883",
+                      "on-background": "#e3e3df",
+                      "error-container": "#93000a",
+                      "secondary-container": "#165513",
+                      "surface-variant": "#333533",
+                      "surface-container-lowest": "#0d0f0d",
+                      "outline": "#8a9385",
+                      "primary-fixed-dim": "#91d883",
+                      "surface-container-low": "#1a1c1a",
+                      "on-tertiary-fixed-variant": "#4a4733",
+                      "tertiary-fixed": "#e8e3c7",
+                      "surface": "#121412",
+                      "secondary-fixed": "#b0f49f",
+                      "on-primary": "#003a03",
+                      "surface-bright": "#383a37",
+                      "inverse-surface": "#e3e3df",
+                      "surface-container-highest": "#333533",
+                      "on-error-container": "#ffdad6",
+                      "primary-container": "#0d530e",
+                      "inverse-primary": "#2a6c25",
+                      "background": "#121412",
+                      "primary": "#91d883",
+                      "tertiary-fixed-dim": "#ccc7ac",
+                      "on-tertiary": "#33311e",
+                      "secondary": "#94d786",
+                      "surface-container-high": "#292a28",
+                      "error": "#ffb4ab",
+                      "on-secondary-fixed-variant": "#135211",
+                      "outline-variant": "#41493d",
+                      "surface-container": "#1e201e",
+                      "on-primary-fixed": "#002201",
+                      "on-primary-container": "#81c674",
+                      "on-tertiary-fixed": "#1e1c0b",
+                      "secondary-fixed-dim": "#94d786",
+                      "on-secondary-container": "#87c979",
+                      "inverse-on-surface": "#2f312e",
+                      "surface-dim": "#121412",
+                      "on-secondary": "#003a02",
+                      "on-error": "#690005",
+                      "tertiary-container": "#4a4833",
+                      "on-surface-variant": "#c0c9b9",
+                      "on-secondary-fixed": "#002201"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "max-width": "1440px",
+                      "margin-mobile": "20px",
+                      "unit": "4px",
+                      "margin-desktop": "64px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Hanken Grotesk"],
+                      "headline-lg": ["Geist"],
+                      "body-md": ["Hanken Grotesk"],
+                      "label-md": ["Geist"],
+                      "headline-md": ["Geist"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "headline-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "headline-md": ["32px", {"lineHeight": "1.2", "fontWeight": "500"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background selection:bg-primary/30">
+<header class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-fit min-w-[800px] bg-surface/40 backdrop-blur-xl border border-white/10 rounded-full shadow-lg transition-all duration-300">
+<div class="flex justify-between items-center gap-12 px-8 py-2">
+<div class="font-headline-md text-headline-md font-bold text-primary">Rootly</div>
+<nav class="hidden md:flex gap-8 items-center">
+<a class="font-body-lg text-body-lg text-primary border-b-2 border-primary pb-1" href="#">Log Activity</a>
+<a class="font-body-lg text-body-lg text-on-surface-variant hover:text-on-surface transition-all duration-300" href="#">Features</a>
+<a class="font-body-lg text-body-lg text-on-surface-variant hover:text-on-surface transition-all duration-300" href="#">AI Coach</a>
+<a class="font-body-lg text-body-lg text-on-surface-variant hover:text-on-surface transition-all duration-300" href="#">Reports</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">settings</button>
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-label-md active:scale-95 transition-transform">Get Started</button>
+</div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto px-margin-desktop py-12 relative"><div class="mb-8">
+  <h1 class="font-headline-lg text-headline-lg font-bold text-on-surface">Activity Intelligence</h1>
+  <p class="text-on-surface-variant font-body-lg mt-2">Monitor and manage your environmental footprint in real-time.</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 relative z-10">
+<section class="md:col-span-5 flex flex-col gap-8">
+<div class="glass-card p-8 flex flex-col gap-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: &quot;FILL&quot; 1;">psychology</span>
+<h2 class="font-headline-md text-headline-md">Input Module</h2>
+</div>
+<p class="text-on-surface-variant font-body-md">What's your footprint today? Describe an activity or use a template.</p>
+<div class="grid grid-cols-2 gap-3">
+<button class="flex items-center gap-2 p-3 bg-surface-container rounded-xl border border-outline-variant/30 hover:border-primary transition-all group">
+<span class="material-symbols-outlined text-primary-fixed text-sm">flight</span>
+<span class="font-label-md">Travel</span>
+</button>
+<button class="flex items-center gap-2 p-3 bg-surface-container rounded-xl border border-outline-variant/30 hover:border-primary transition-all">
+<span class="material-symbols-outlined text-primary-fixed text-sm">restaurant</span>
+<span class="font-label-md">Food</span>
+</button>
+<button class="flex items-center gap-2 p-3 bg-surface-container rounded-xl border border-outline-variant/30 hover:border-primary transition-all">
+<span class="material-symbols-outlined text-primary-fixed text-sm">bolt</span>
+<span class="font-label-md">Electricity</span>
+</button>
+<button class="flex items-center gap-2 p-3 bg-surface-container rounded-xl border border-outline-variant/30 hover:border-primary transition-all">
+<span class="material-symbols-outlined text-primary-fixed text-sm">eco</span>
+<span class="font-label-md">Lifestyle</span>
+</button>
+</div>
+<div class="relative mt-2">
+<textarea class="recessed-input w-full p-4 rounded-xl text-on-surface font-body-md resize-none" placeholder="E.g., I flew from London to Paris and ate a vegan dinner..." rows="5"></textarea>
+<button class="absolute bottom-4 right-4 bg-primary text-on-primary p-3 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+<div class="glass-card p-6 overflow-hidden relative group h-48">
+<img class="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:scale-110 transition-transform duration-700" data-alt="A lush, dense forest with rays of morning sunlight filtering through the deep green canopy. The scene is calm, emphasizing the natural beauty of the wilderness. The lighting is soft and atmospheric, blending deep forest greens with golden highlights, evoking a sense of tranquil sustainability and environmental preservation." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb_ifhgMHEUMJP9xcG-295m8tWuIkmgwb4bP3cwDHY6YZ_ypgh9ScBjohv9ixU_s_Ir26U-Ur5_EeHDaypdvsAGWEuSm4OH5fRb-fX3geJ0DTGbHYKbQzQEmRH1-DY_Rs2xrXQfhnhBIYdhnj1g7DdbUd038Xu9HthsdHA08Zje1vSpMi9qc5R4c6IhzcP6U7SqarksaRX1_Lea1EMW_tLYiri49aHFZDdt8rtVjilutM3BTSbcb6NJojp5g-7Q6-j8VOse2m406-3">
+<div class="relative z-10 flex flex-col h-full justify-between">
+<span class="bg-primary-fixed/20 backdrop-blur-md text-primary-fixed px-3 py-1 rounded-full text-xs font-bold w-fit">ECO-TIP</span>
+<div>
+<h3 class="font-headline-sm text-lg font-bold">Switching to LED bulbs?</h3>
+<p class="text-sm opacity-80">You could save up to 120kg of CO2 annually per room.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="md:col-span-7 flex flex-col gap-8">
+<div class="glass-card p-8 flex flex-col gap-8">
+<div class="flex justify-between items-start">
+<div>
+<h2 class="font-headline-md text-headline-md">AI Intelligence</h2>
+<p class="text-on-surface-variant font-body-md">Live Parsing active...</p>
+</div>
+<div class="px-4 py-2 bg-secondary-container rounded-full border border-secondary/30 flex items-center gap-2">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+<span class="font-label-md text-primary">Scanning Text</span>
+</div>
+</div>
+<div class="space-y-6">
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="font-label-md">Current Emissions Estimate</span>
+<span class="text-primary font-bold">142 kg CO2e</span>
+</div>
+<div class="kinetic-bar w-full">
+<div class="bg-primary h-full rounded-full" style="width: 65%;"></div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="p-4 bg-surface-container-high rounded-2xl border border-white/5">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-lg">trending_down</span>
+<span class="font-label-md">Potential Savings</span>
+</div>
+<div class="text-2xl font-headline-md text-primary">-28kg</div>
+<p class="text-xs text-on-surface-variant mt-1">If you offset the travel component.</p>
+</div>
+<div class="p-4 bg-surface-container-high rounded-2xl border border-white/5">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-tertiary text-lg">lightbulb</span>
+<span class="font-label-md">Improvement Suggestion</span>
+</div>
+<div class="text-sm font-body-md">Switch your travel to rail to reduce your trip footprint by 85%.</div>
+</div>
+</div>
+</div>
+<div class="border-t border-outline-variant/20 pt-6">
+<h4 class="font-label-md mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-xs">list_alt</span>
+                            Identified Entities
+                        </h4>
+<div class="flex flex-wrap gap-2">
+<span class="bg-surface-variant px-3 py-1 rounded-full text-xs font-medium border border-white/10">Location: London-Paris</span>
+<span class="bg-surface-variant px-3 py-1 rounded-full text-xs font-medium border border-white/10">Mode: Aviation</span>
+<span class="bg-surface-variant px-3 py-1 rounded-full text-xs font-medium border border-white/10">Diet: Plant-based</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="glass-card p-6 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<span class="font-label-md opacity-60">Global Ranking</span>
+<span class="material-symbols-outlined text-primary">leaderboard</span>
+</div>
+<div class="text-3xl font-bold font-headline-md">Top 12%</div>
+<p class="text-sm text-on-surface-variant">You are performing better than 88% of users in your region.</p>
+</div>
+<div class="glass-card p-6 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<span class="font-label-md opacity-60">Impact Credits</span>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: &quot;FILL&quot; 1;">loyalty</span>
+</div>
+<div class="text-3xl font-bold font-headline-md">2,450</div>
+<p class="text-sm text-on-surface-variant">Redeemable for community sustainability projects.</p>
+</div>
+</div>
+</section>
+<section class="md:col-span-12">
+<div class="glass-card p-8">
+<div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+<div>
+<h2 class="font-headline-md text-headline-md">Activity History</h2>
+<p class="text-on-surface-variant font-body-md">Tracking your progress over the last 30 days.</p>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 bg-surface-container rounded-full text-sm font-label-md border border-white/5 hover:bg-surface-variant transition-colors">Daily</button>
+<button class="px-4 py-2 bg-primary text-on-primary rounded-full text-sm font-label-md border border-primary/20">Weekly</button>
+<button class="px-4 py-2 bg-surface-container rounded-full text-sm font-label-md border border-white/5 hover:bg-surface-variant transition-colors">Monthly</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-outline-variant/10 text-on-surface-variant font-label-md">
+<th class="pb-4 font-normal">Activity</th>
+<th class="pb-4 font-normal">Date</th>
+<th class="pb-4 font-normal">Category</th>
+<th class="pb-4 font-normal">Emissions</th>
+<th class="pb-4 font-normal text-right">Action</th>
+</tr>
+</thead>
+<tbody class="font-body-md">
+<tr class="border-b border-outline-variant/10 hover:bg-white/5 transition-colors group">
+<td class="py-4 font-medium">Commute to Work (EV)</td>
+<td class="py-4 text-on-surface-variant">Oct 24, 2024</td>
+<td class="py-4"><span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs">Travel</span></td>
+<td class="py-4">1.2 kg CO2e</td>
+<td class="py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">more_vert</button>
+</td>
+</tr>
+<tr class="border-b border-outline-variant/10 hover:bg-white/5 transition-colors group">
+<td class="py-4 font-medium">Grocery Run (Plastic Free)</td>
+<td class="py-4 text-on-surface-variant">Oct 23, 2024</td>
+<td class="py-4"><span class="px-3 py-1 bg-tertiary/10 text-tertiary rounded-full text-xs">Food</span></td>
+<td class="py-4">0.4 kg CO2e</td>
+<td class="py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group">
+<td class="py-4 font-medium">Home Office Heating</td>
+<td class="py-4 text-on-surface-variant">Oct 22, 2024</td>
+<td class="py-4"><span class="px-3 py-1 bg-error-container/20 text-error rounded-full text-xs">Energy</span></td>
+<td class="py-4">4.8 kg CO2e</td>
+<td class="py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</div>
+</main>
+<footer class="w-full py-12 bg-surface-container-low border-t border-outline-variant/10 mt-20">
+<div class="flex flex-col md:flex-row justify-between items-center max-w-margin-desktop mx-auto px-margin-desktop gap-8">
+<div class="flex flex-col gap-2">
+<div class="font-headline-sm text-headline-sm text-on-surface font-bold">Rootly</div>
+<p class="text-on-surface-variant font-body-md">© 2024 Rootly Intelligence. Precision Sustainability.</p>
+</div>
+<div class="flex gap-8">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="#">Contact</a>
+</div>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full border border-outline-variant/20 flex items-center justify-center hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">public</span>
+</a>
+<a class="w-10 h-10 rounded-full border border-outline-variant/20 flex items-center justify-center hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">share</span>
+</a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interactions for buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.classList.add('scale-95');
+            });
+            button.addEventListener('mouseup', () => {
+                button.classList.remove('scale-95');
+            });
+            button.addEventListener('mouseleave', () => {
+                button.classList.remove('scale-95');
+            });
+        });
+
+        // Simulating Live Parsing activity
+        const textarea = document.querySelector('textarea');
+        const statusText = document.querySelector('.flex.items-center.gap-2 span.font-label-md');
+        
+        textarea.addEventListener('input', (e) => {
+            if(e.target.value.length > 5) {
+                statusText.textContent = "Analyzing Content...";
+                statusText.classList.add('text-primary');
+            } else {
+                statusText.textContent = "Scanning Text";
+                statusText.classList.remove('text-primary');
+            }
+        });
+    </script>
+
+
+
+
+</body></html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rootly | Exports &amp; Reports</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(18, 20, 18, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(145, 216, 131, 0.1);
+        }
+        .liquid-glass {
+            background: rgba(18, 20, 18, 0.4);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .kinetic-gradient {
+            background: linear-gradient(135deg, #0d530e 0%, #165513 100%);
+        }
+        body {
+            background-color: #121412;
+            color: #e3e3df;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121412;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333533;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#690005",
+                        "tertiary": "#ccc7ac",
+                        "on-secondary-fixed-variant": "#135211",
+                        "surface": "#121412",
+                        "inverse-on-surface": "#2f312e",
+                        "tertiary-fixed-dim": "#ccc7ac",
+                        "outline-variant": "#41493d",
+                        "primary-fixed": "#acf59d",
+                        "on-secondary": "#003a02",
+                        "surface-container": "#1e201e",
+                        "inverse-primary": "#2a6c25",
+                        "error": "#ffb4ab",
+                        "background": "#121412",
+                        "surface-dim": "#121412",
+                        "surface-variant": "#333533",
+                        "primary-container": "#0d530e",
+                        "on-primary-container": "#81c674",
+                        "surface-tint": "#91d883",
+                        "on-secondary-container": "#87c979",
+                        "secondary-container": "#165513",
+                        "secondary-fixed": "#b0f49f",
+                        "on-error-container": "#ffdad6",
+                        "on-surface-variant": "#c0c9b9",
+                        "on-primary-fixed": "#002201",
+                        "secondary-fixed-dim": "#94d786",
+                        "surface-container-highest": "#333533",
+                        "surface-container-high": "#292a28",
+                        "on-secondary-fixed": "#002201",
+                        "surface-container-low": "#1a1c1a",
+                        "primary": "#91d883",
+                        "primary-fixed-dim": "#91d883",
+                        "on-tertiary-fixed": "#1e1c0b",
+                        "on-primary": "#003a03",
+                        "on-background": "#e3e3df",
+                        "on-tertiary-fixed-variant": "#4a4733",
+                        "on-surface": "#e3e3df",
+                        "on-tertiary": "#33311e",
+                        "tertiary-fixed": "#e8e3c7",
+                        "surface-bright": "#383a37",
+                        "outline": "#8a9385",
+                        "error-container": "#93000a",
+                        "tertiary-container": "#4a4833",
+                        "surface-container-lowest": "#0d0f0d",
+                        "on-primary-fixed-variant": "#0c530e",
+                        "on-tertiary-container": "#bbb79c",
+                        "inverse-surface": "#e3e3df",
+                        "secondary": "#94d786"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "20px",
+                        "max-width": "1440px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Geist"],
+                        "label-md": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-md": ["32px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "headline-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- Sidebar Overlay (Hidden by Default) -->
+<div class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] opacity-0 pointer-events-none transition-opacity duration-300" id="side-nav-overlay"></div>
+<aside class="fixed left-0 top-0 h-screen w-72 bg-surface-container-low border-r border-white/5 z-[70] -translate-x-full transition-transform duration-500 ease-in-out py-8 flex flex-col" id="side-nav">
+<div class="px-8 mb-12 flex justify-between items-center">
+<span class="font-headline-md text-headline-md font-black text-primary">Rootly</span>
+<button class="p-2 hover:bg-white/5 rounded-full transition-all" onclick="toggleNav()">
+<span class="material-symbols-outlined text-on-surface-variant">close</span>
+</button>
+</div>
+<nav class="flex-1 space-y-1 px-4">
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-white/5 rounded-full transition-all duration-300 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-white/5 rounded-full transition-all duration-300 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">extension</span>
+<span class="font-label-md text-label-md">Features</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-white/5 rounded-full transition-all duration-300 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">psychology</span>
+<span class="font-label-md text-label-md">AI Coach</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 bg-primary-container text-on-primary-container rounded-full transition-all duration-300 group" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Reports</span>
+</a>
+</nav>
+<div class="mt-auto px-8">
+<div class="p-6 rounded-lg bg-primary/5 border border-primary/10 mb-8">
+<p class="text-xs text-primary font-bold tracking-widest mb-2 uppercase">Pro Status</p>
+<p class="text-sm text-on-surface-variant mb-4">Unlock advanced ESG frameworks.</p>
+<button class="w-full py-2 bg-primary text-on-primary font-bold rounded-full text-sm active:scale-95 transition-transform">Upgrade to Pro</button>
+</div>
+</div>
+</aside>
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 transition-all duration-300 liquid-glass">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop h-20 flex justify-between items-center">
+<div class="flex items-center gap-6">
+<button class="flex items-center justify-center w-10 h-10 hover:bg-white/5 rounded-full transition-all active:scale-90" onclick="toggleNav()">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+<span class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Rootly</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Home</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Features</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">AI Coach</a>
+<a class="font-label-md text-label-md text-primary font-semibold border-b-2 border-primary pb-1" href="#">Reports</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-white/5 rounded-full cursor-pointer transition-all">notifications</span>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-white/10">
+<img alt="Rootly User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB672O5-JQPEqd8CYuvZC7Ap7VWQ1cJ03-BQI6dMdWvsGOl9qZdYaIjJcgXo_kfUyNC0O1qLVWk4I_NDqREjaI6f5ahgUvwmBP7gdg1Ah1IrNswvigSfP2Av3rUb98ADleH36EIeqb98mo311cC1lbIXM2ZkyzoeYx26CbcQDs9bN7pEYskAGLixqihMXM2xvXsmq1GU6ybZALdBBR7cuR45AxoCY8o4qiu3Uy4BoLV319vk1gbThwfbDyDPWABjqkbBS6AbHZDK_Wp"/>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-32 pb-24 px-margin-mobile md:px-margin-desktop max-w-max-width mx-auto relative">
+<!-- Subtle background glow -->
+<div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[120px] -z-10 rounded-full"></div>
+<!-- Page Title -->
+<section class="mb-16">
+<h1 class="font-headline-lg text-headline-lg md:text-headline-lg text-on-surface mb-4">Export Hub</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                Synthesis of high-fidelity environmental data into professional reporting formats. Export compliance-ready audits and live-sync datasets.
+            </p>
+</section>
+<!-- Primary Export Actions -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-gutter mb-20">
+<!-- Generate PDF -->
+<div class="group glass-card p-10 rounded-lg flex flex-col justify-between hover:border-primary/40 transition-all duration-500 cursor-pointer overflow-hidden relative">
+<div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[120px]">picture_as_pdf</span>
+</div>
+<div>
+<div class="w-12 h-12 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center mb-8">
+<span class="material-symbols-outlined">description</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">Generate PDF Report</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 max-w-sm">
+                        High-precision document generation including data visualization, executive summaries, and carbon footprint analysis.
+                    </p>
+</div>
+<button class="w-fit flex items-center gap-2 px-8 py-3 bg-primary text-on-primary font-bold rounded-full hover:scale-105 active:scale-95 transition-all">
+                    Initialize Report <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<!-- Google Sheets Integration -->
+<div class="group glass-card p-10 rounded-lg flex flex-col justify-between hover:border-secondary/40 transition-all duration-500 cursor-pointer overflow-hidden relative">
+<div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[120px]">sync</span>
+</div>
+<div>
+<div class="w-12 h-12 bg-secondary-container text-on-secondary-container rounded-full flex items-center justify-center mb-8">
+<span class="material-symbols-outlined">table_chart</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">Google Sheets Sync</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 max-w-sm">
+                        Continuous live data streaming into your existing worksheets. Automated refresh every 4 hours or manual trigger.
+                    </p>
+</div>
+<button class="w-fit flex items-center gap-2 px-8 py-3 bg-secondary-container text-on-secondary-container font-bold rounded-full hover:bg-secondary-container/80 active:scale-95 transition-all border border-secondary/20">
+                    Manage Connection <span class="material-symbols-outlined">link</span>
+</button>
+</div>
+</section>
+<!-- Template Lab -->
+<section class="mb-20">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Template Lab</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Pre-configured ESG and sustainability frameworks.</p>
+</div>
+<a class="text-primary font-label-md text-label-md hover:underline" href="#">View all 24 templates</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Template Item 1 -->
+<div class="glass-card p-6 rounded-lg group hover:bg-white/5 transition-all duration-300">
+<div class="flex justify-between items-start mb-6">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">verified</span>
+</div>
+<span class="text-[10px] font-bold tracking-widest text-primary uppercase bg-primary/10 px-2 py-1 rounded">Official</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface mb-2">Annual ESG Audit</h4>
+<p class="text-sm text-on-surface-variant mb-6 line-clamp-2">Complete environmental, social, and governance overview for the current fiscal year.</p>
+<div class="flex items-center gap-3">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border border-surface bg-primary/20 text-[10px] flex items-center justify-center font-bold">BR</div>
+<div class="w-6 h-6 rounded-full border border-surface bg-secondary/20 text-[10px] flex items-center justify-center font-bold">GH</div>
+</div>
+<span class="text-xs text-outline">Used by 400+ orgs</span>
+</div>
+</div>
+<!-- Template Item 2 -->
+<div class="glass-card p-6 rounded-lg group hover:bg-white/5 transition-all duration-300">
+<div class="flex justify-between items-start mb-6">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">account_tree</span>
+</div>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface mb-2">Supply Chain Impact</h4>
+<p class="text-sm text-on-surface-variant mb-6 line-clamp-2">Detailed breakdown of Scope 3 emissions across your entire supplier network.</p>
+<div class="flex items-center gap-3">
+<span class="text-xs text-outline">v2.4 updated yesterday</span>
+</div>
+</div>
+<!-- Template Item 3 -->
+<div class="glass-card p-6 rounded-lg group hover:bg-white/5 transition-all duration-300">
+<div class="flex justify-between items-start mb-6">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<span class="text-[10px] font-bold tracking-widest text-tertiary uppercase bg-tertiary/10 px-2 py-1 rounded">Beta</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface mb-2">Energy Efficiency Benchmarking</h4>
+<p class="text-sm text-on-surface-variant mb-6 line-clamp-2">Comparing operational energy usage against industry standards and peers.</p>
+<div class="flex items-center gap-3">
+<span class="text-xs text-outline">Customizable fields</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Historical Archive -->
+<section>
+<div class="flex items-center gap-4 mb-8">
+<h2 class="font-headline-md text-headline-md text-on-surface">Historical Archive</h2>
+<div class="h-[1px] flex-1 bg-white/5"></div>
+</div>
+<div class="glass-card rounded-lg overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-white/5 bg-white/5">
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Report Name</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Format</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Status</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Generated Date</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-sm">history</span>
+<span class="font-body-md text-on-surface">Q3 Sustainability Report_Final</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs font-mono bg-white/5 px-2 py-1 rounded border border-white/10 uppercase">PDF</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="text-sm text-on-surface-variant">Completed</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-on-surface-variant">Oct 24, 2023 · 14:32</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-sm">history</span>
+<span class="font-body-md text-on-surface">Supply_Chain_Compliance_V2</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs font-mono bg-white/5 px-2 py-1 rounded border border-white/10 uppercase">XLSX</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="text-sm text-on-surface-variant">Completed</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-on-surface-variant">Oct 20, 2023 · 09:15</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 opacity-60">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error text-sm">error</span>
+<span class="font-body-md text-on-surface line-through">Draft_Carbon_Report_Iterative</span>
+</div>
+</td>
+<td class="px-6 py-4 opacity-60">
+<span class="text-xs font-mono bg-white/5 px-2 py-1 rounded border border-white/10 uppercase">PDF</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<span class="text-sm text-on-surface-variant">Failed</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-on-surface-variant opacity-60">Oct 18, 2023 · 16:45</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">refresh</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</main>
+<!-- Success Message (Micro-interaction) -->
+<div class="fixed bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-3 px-6 py-3 bg-surface-container-highest border border-primary/20 rounded-full shadow-2xl opacity-0 translate-y-20 transition-all duration-500 z-[100]" id="toast">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+<span class="text-sm font-medium">Export started successfully</span>
+</div>
+<script>
+        function toggleNav() {
+            const sideNav = document.getElementById('side-nav');
+            const overlay = document.getElementById('side-nav-overlay');
+            const isOpen = sideNav.classList.contains('translate-x-0');
+
+            if (isOpen) {
+                sideNav.classList.remove('translate-x-0');
+                sideNav.classList.add('-translate-x-full');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+                overlay.classList.remove('opacity-100');
+            } else {
+                sideNav.classList.remove('-translate-x-full');
+                sideNav.classList.add('translate-x-0');
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                overlay.classList.add('opacity-100');
+            }
+        }
+
+        // Close sidebar on overlay click
+        document.getElementById('side-nav-overlay').addEventListener('click', toggleNav);
+
+        // Toast Trigger Mock
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if(this.textContent.includes('Initialize') || this.textContent.includes('Sync')) {
+                    const toast = document.getElementById('toast');
+                    toast.classList.remove('opacity-0', 'translate-y-20');
+                    toast.classList.add('opacity-100', 'translate-y-0');
+                    setTimeout(() => {
+                        toast.classList.add('opacity-0', 'translate-y-20');
+                        toast.classList.remove('opacity-100', 'translate-y-0');
+                    }, 3000);
+                }
+            });
+        });
+
+        // Scroll listener for nav glassmorphism depth
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-xl', 'py-0');
+                header.querySelector('.max-w-max-width').classList.remove('h-20');
+                header.querySelector('.max-w-max-width').classList.add('h-16');
+            } else {
+                header.classList.remove('shadow-xl', 'py-0');
+                header.querySelector('.max-w-max-width').classList.add('h-20');
+                header.querySelector('.max-w-max-width').classList.remove('h-16');
+            }
+        });
+    </script>
+</body></html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Rootly | Profile &amp; Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Geist-like feel via local-ish look -->
+<style>
+        @import url('https://fonts.cdnfonts.com/css/geist-sans');
+        body {
+            font-family: 'Hanken Grotesk', sans-serif;
+            background-color: #121412;
+            color: #e3e3df;
+            -webkit-font-smoothing: antialiased;
+        }
+        .font-geist { font-family: 'Geist Sans', sans-serif; }
+        .glass-panel {
+            background: rgba(13, 83, 14, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+        }
+        .glass-panel:hover {
+            border-color: rgba(145, 216, 131, 0.2);
+            background: rgba(13, 83, 14, 0.08);
+        }
+        .liquid-glass {
+            background: rgba(18, 20, 18, 0.4);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(145, 216, 131, 0.1);
+        }
+        .glow-subtle {
+            box-shadow: 0 0 40px rgba(13, 83, 14, 0.15);
+        }
+        input[type="range"] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+            background: rgba(255, 255, 255, 0.1);
+            height: 4px;
+            border-radius: 2px;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #91d883;
+            margin-top: -6px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(145, 216, 131, 0.5);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom Toggle */
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #0d530e;
+        }
+        .toggle-checkbox:checked + .toggle-label .toggle-dot {
+            transform: translateX(100%);
+            background-color: #91d883;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-bright": "#383a37",
+                      "on-secondary-container": "#87c979",
+                      "on-background": "#e3e3df",
+                      "inverse-primary": "#2a6c25",
+                      "secondary": "#94d786",
+                      "inverse-on-surface": "#2f312e",
+                      "on-secondary": "#003a02",
+                      "on-primary": "#003a03",
+                      "tertiary-fixed-dim": "#ccc7ac",
+                      "on-tertiary": "#33311e",
+                      "secondary-fixed": "#b0f49f",
+                      "primary-container": "#0d530e",
+                      "on-surface-variant": "#c0c9b9",
+                      "on-primary-fixed": "#002201",
+                      "on-error": "#690005",
+                      "surface-container-highest": "#333533",
+                      "on-tertiary-fixed-variant": "#4a4733",
+                      "on-surface": "#e3e3df",
+                      "on-secondary-fixed-variant": "#135211",
+                      "tertiary-fixed": "#e8e3c7",
+                      "error": "#ffb4ab",
+                      "primary-fixed": "#acf59d",
+                      "surface-container-high": "#292a28",
+                      "on-tertiary-fixed": "#1e1c0b",
+                      "surface-tint": "#91d883",
+                      "inverse-surface": "#e3e3df",
+                      "tertiary": "#ccc7ac",
+                      "secondary-container": "#165513",
+                      "outline": "#8a9385",
+                      "on-primary-container": "#81c674",
+                      "surface-container-lowest": "#0d0f0d",
+                      "secondary-fixed-dim": "#94d786",
+                      "on-tertiary-container": "#bbb79c",
+                      "surface-variant": "#333533",
+                      "surface-container-low": "#1a1c1a",
+                      "tertiary-container": "#4a4833",
+                      "on-primary-fixed-variant": "#0c530e",
+                      "primary": "#91d883",
+                      "surface": "#121412",
+                      "on-error-container": "#ffdad6",
+                      "background": "#121412",
+                      "surface-container": "#1e201e",
+                      "primary-fixed-dim": "#91d883",
+                      "on-secondary-fixed": "#002201",
+                      "error-container": "#93000a",
+                      "outline-variant": "#41493d",
+                      "surface-dim": "#121412"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "max-width": "1440px",
+                      "unit": "4px",
+                      "margin-mobile": "20px",
+                      "margin-desktop": "64px"
+              },
+              "fontFamily": {
+                      "label-md": ["Geist Sans", "sans-serif"],
+                      "headline-md": ["Geist Sans", "sans-serif"],
+                      "body-md": ["Hanken Grotesk", "sans-serif"],
+                      "headline-lg": ["Geist Sans", "sans-serif"],
+                      "body-lg": ["Hanken Grotesk", "sans-serif"],
+                      "headline-lg-mobile": ["Geist Sans", "sans-serif"]
+              },
+              "fontSize": {
+                      "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "headline-md": ["32px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                      "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "headline-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-surface overflow-x-hidden selection:bg-primary/30">
+<!-- Floating Top Navigation -->
+<header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-md py-sm rounded-full mt-8 mx-auto w-[90%] max-w-7xl liquid-glass glow-subtle transition-all duration-500">
+<div class="flex items-center gap-4 ml-6">
+<span class="font-headline-lg text-[24px] font-bold text-primary-fixed tracking-tight font-geist">Rootly</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-primary-fixed border-b-2 border-primary-fixed pb-1 font-label-md text-label-md" href="#">Home</a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors" href="#">Features</a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors" href="#">AI Coach</a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors" href="#">Reports</a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors" href="#">Goals</a>
+</div>
+<div class="flex items-center gap-4 mr-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/5 transition-all active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary-fixed">menu</span>
+</button>
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-label-md text-label-md hover:opacity-90 transition-all active:scale-95">
+                Sign In
+            </button>
+</div>
+</header>
+<main class="pt-40 pb-24 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
+<!-- Hero Section -->
+<section class="mb-16 flex flex-col md:flex-row items-center gap-12">
+<div class="relative group">
+<div class="absolute inset-0 bg-primary/20 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+<div class="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-2 border-primary-fixed/20 relative z-10">
+<img alt="User Profile Headshot" class="w-full h-full object-cover grayscale-[0.5] hover:grayscale-0 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD04n5SXEk8KYQyjfp3bcPsWBd__Ay3BnkHJ44IxBPjppHS4ynRonmuegzbClPtexmWqrRaLU2ZXy3ty5cxdASLlVeoNSk7NRWAbLvc6ci04H22zslpmaRHspAsXDTB5hquIzpiz3GjOT78uUEvQiJidpSv1XHbE0W7yjRXBAvx-YeGlT-1-UT1pJhINaJGMZKRVqYDqgmRozsCpD6NbKyxBQ1lL8URjW4Nya8oe_QnheR07moWqmTKN7W3u5JBl3riJiR6ljsEPdDl">
+</div>
+<div class="absolute -bottom-2 -right-2 bg-primary text-on-primary p-3 rounded-full shadow-xl">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">eco</span>
+</div>
+</div>
+<div class="text-center md:text-left space-y-4">
+<div class="inline-flex items-center gap-2 bg-primary-container/20 px-4 py-1 rounded-full border border-primary/10">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="text-primary font-label-md text-label-md uppercase tracking-widest">Active Operative</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-geist">Caelum Thorne</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl leading-relaxed">
+                    Synthesizing planetary restoration through precision agronomy and algorithmic preservation. Committed to a net-positive biological footprint and 100% data transparency.
+                </p>
+</div>
+</section>
+<!-- Identity Telemetry Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-20">
+<!-- Card 1 -->
+<div class="glass-panel p-8 rounded-lg flex flex-col justify-between h-48 transition-all duration-300">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary-fixed opacity-60">verified_user</span>
+<span class="text-on-surface-variant font-label-md text-label-md uppercase tracking-tighter">Security Level</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md font-geist">L-Alpha</h3>
+<p class="text-primary-fixed text-label-md font-label-md">Biometric Encrypted</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-panel p-8 rounded-lg flex flex-col justify-between h-48 transition-all duration-300 border-primary/20" style="--mouse-x: 73px; --mouse-y: 33px;">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary-fixed" style="font-variation-settings: &quot;FILL&quot; 1;">sync</span>
+<span class="text-on-surface-variant font-label-md text-label-md uppercase tracking-tighter">Sustainability Sync</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md font-geist">Active</h3>
+<p class="text-primary-fixed text-label-md font-label-md">Real-time Node Link</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass-panel p-8 rounded-lg flex flex-col justify-between h-48 transition-all duration-300">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary-fixed opacity-60">database</span>
+<span class="text-on-surface-variant font-label-md text-label-md uppercase tracking-tighter">Data Sovereignty</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md font-geist">100%</h3>
+<p class="text-primary-fixed text-label-md font-label-md">User-Owned Nodes</p>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+<!-- Mission Configuration -->
+<section class="space-y-8">
+<div class="space-y-2">
+<h2 class="font-headline-md text-headline-md font-geist">Mission Configuration</h2>
+<p class="text-on-surface-variant font-body-md text-body-md">Refine your systemic impact thresholds and risk parameters.</p>
+</div>
+<div class="space-y-12 pt-4">
+<!-- Slider 1 -->
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<label class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant">Carbon Sensitivity</label>
+<span class="text-primary font-geist text-xl">High Impact</span>
+</div>
+<input class="w-full" max="100" min="1" type="range" value="85">
+</div>
+<!-- Slider 2 -->
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<label class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant">Investment Risk Profile</label>
+<span class="text-primary font-geist text-xl">Calculated Growth</span>
+</div>
+<input class="w-full" max="100" min="1" type="range" value="45">
+</div>
+</div>
+</section>
+<!-- Communication Channels -->
+<section class="space-y-8">
+<div class="space-y-2">
+<h2 class="font-headline-md text-headline-md font-geist">Communication Channels</h2>
+<p class="text-on-surface-variant font-body-md text-body-md">Manage the frequency and depth of atmospheric updates.</p>
+</div>
+<div class="space-y-4 pt-4">
+<div class="glass-panel p-6 rounded-lg flex items-center justify-between group cursor-pointer transition-all">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-container/30 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">notifications_active</span>
+</div>
+<div>
+<h4 class="font-geist font-medium">Real-time Biome Alerts</h4>
+<p class="text-on-surface-variant text-sm">Critical updates on local ecosystem stability.</p>
+</div>
+</div>
+<div class="relative inline-block w-12 h-6 transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-surface-bright border-4 border-transparent appearance-none cursor-pointer z-10" id="toggle1" type="checkbox">
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-container-high cursor-pointer transition-colors duration-200" for="toggle1"></label>
+<span class="toggle-dot absolute top-0 left-0 w-6 h-6 bg-white rounded-full transition-transform duration-200"></span>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-lg flex items-center justify-between group cursor-pointer transition-all">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-container/30 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">auto_stories</span>
+</div>
+<div>
+<h4 class="font-geist font-medium">The Seedling Digest</h4>
+<p class="text-on-surface-variant text-sm">Weekly synthesis of global restoration trends.</p>
+</div>
+</div>
+<div class="relative inline-block w-12 h-6 transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-surface-bright border-4 border-transparent appearance-none cursor-pointer z-10" id="toggle2" type="checkbox">
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-container-high cursor-pointer transition-colors duration-200" for="toggle2"></label>
+<span class="toggle-dot absolute top-0 left-0 w-6 h-6 bg-white rounded-full transition-transform duration-200"></span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Secure Operations -->
+<section class="mt-24 pt-16 border-t border-outline-variant/20">
+<div class="mb-10">
+<h2 class="font-headline-md text-headline-md font-geist">Secure Operations</h2>
+<p class="text-on-surface-variant font-body-md text-body-md">Sensitive administrative controls and access history.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div class="space-y-4">
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-lg hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-fixed">key</span>
+<span class="font-geist">Two-Factor Authentication (2FA)</span>
+</div>
+<span class="text-primary text-label-md font-label-md">Enabled</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-lg hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">history</span>
+<span class="font-geist">Access Logs</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+</div>
+</div>
+<div class="flex flex-col justify-end items-end gap-4">
+<p class="text-sm text-on-surface-variant text-right max-w-xs">Danger Zone: Irreversibly terminate your mission profile and scrub all telemetry from Rootly nodes.</p>
+<button class="bg-error-container text-on-error-container px-8 py-3 rounded-full font-label-md text-label-md hover:bg-error hover:text-on-error transition-all active:scale-95">
+                        Deactivate Account
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full pt-2xl pb-xl border-t border-outline-variant/30 bg-background">
+<div class="max-w-7xl mx-auto px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-md">
+<div class="flex flex-col gap-2 text-center md:text-left">
+<span class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-on-surface font-geist">Rootly</span>
+<p class="font-body-md text-body-md text-on-secondary-container">© 2024 Rootly AI. Precision Engineering for Earth.</p>
+</div>
+<div class="flex gap-6">
+<a class="text-on-secondary-container hover:text-primary-fixed transition-colors font-label-md text-label-md" href="#">Privacy Policy</a>
+<a class="text-on-secondary-container hover:text-primary-fixed transition-colors font-label-md text-label-md" href="#">Terms of Service</a>
+<a class="text-on-secondary-container hover:text-primary-fixed transition-colors font-label-md text-label-md" href="#">Carbon Methodology</a>
+<a class="text-on-secondary-container hover:text-primary-fixed transition-colors font-label-md text-label-md" href="#">Press Kit</a>
+</div>
+</div>
+</footer>
+<script>
+        // Interactive Hover Effect for glass panels
+        document.querySelectorAll('.glass-panel').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // Simple Active Navigation logic based on page title (simulated)
+        const navLinks = document.querySelectorAll('header a');
+        navLinks.forEach(link => {
+            if(link.textContent === 'Home') {
+                link.className = "text-primary-fixed border-b-2 border-primary-fixed pb-1 font-label-md text-label-md";
+            } else {
+                link.className = "text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors";
+            }
+        });
+    </script>
+
+
+</body></html>

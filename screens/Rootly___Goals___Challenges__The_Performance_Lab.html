@@ -1,0 +1,424 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Rootly — Goals &amp; Challenges: The Performance Lab</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Hanken+Grotesk:wght@100..900&amp;family=JetBrains+Mono:wght@100..800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#4a4833",
+                    "primary-fixed": "#acf59d",
+                    "on-error-container": "#ffdad6",
+                    "on-tertiary": "#33311e",
+                    "outline": "#8a9385",
+                    "background": "#121412",
+                    "outline-variant": "#41493d",
+                    "inverse-primary": "#2a6c25",
+                    "on-background": "#e3e3df",
+                    "secondary-fixed": "#b0f49f",
+                    "surface-variant": "#333533",
+                    "secondary": "#94d786",
+                    "surface-dim": "#121412",
+                    "on-tertiary-container": "#bbb79c",
+                    "on-secondary-fixed-variant": "#135211",
+                    "secondary-fixed-dim": "#94d786",
+                    "inverse-surface": "#e3e3df",
+                    "surface-container": "#1e201e",
+                    "on-primary-fixed-variant": "#0c530e",
+                    "primary-fixed-dim": "#91d883",
+                    "on-tertiary-fixed-variant": "#4a4733",
+                    "surface-bright": "#383a37",
+                    "tertiary-fixed-dim": "#ccc7ac",
+                    "surface-tint": "#91d883",
+                    "on-primary-container": "#81c674",
+                    "tertiary-fixed": "#e8e3c7",
+                    "on-surface-variant": "#c0c9b9",
+                    "inverse-on-surface": "#2f312e",
+                    "surface-container-lowest": "#0d0f0d",
+                    "surface-container-highest": "#333533",
+                    "on-error": "#690005",
+                    "secondary-container": "#165513",
+                    "tertiary": "#ccc7ac",
+                    "on-secondary-fixed": "#002201",
+                    "error-container": "#93000a",
+                    "on-primary-fixed": "#002201",
+                    "surface-container-low": "#1a1c1a",
+                    "primary-container": "#0d530e",
+                    "on-primary": "#003a03",
+                    "error": "#ffb4ab",
+                    "on-tertiary-fixed": "#1e1c0b",
+                    "surface-container-high": "#292a28",
+                    "primary": "#91d883",
+                    "on-secondary": "#003a02",
+                    "surface": "#121412",
+                    "on-secondary-container": "#87c979",
+                    "on-surface": "#e3e3df"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "gutter": "24px",
+                    "max-width": "1440px",
+                    "unit": "4px",
+                    "margin-desktop": "64px"
+            },
+            "fontFamily": {
+                    "body-md": ["Hanken Grotesk"],
+                    "headline-md": ["Geist"],
+                    "label-md": ["Geist"],
+                    "headline-lg-mobile": ["Geist"],
+                    "headline-lg": ["Geist"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "mono": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-md": ["32px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "headline-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #121412;
+            color: #e3e3df;
+            font-family: 'Hanken Grotesk', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-card {
+            background: rgba(18, 20, 18, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+        }
+        .mono-text {
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: -0.02em;
+        }
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(30, 1fr);
+            gap: 4px;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 9999px;
+        }
+        .circular-progress {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: conic-gradient(#91d883 var(--progress), transparent 0deg);
+        }
+        .circular-progress::after {
+            content: "";
+            position: absolute;
+            inset: 8px;
+            background: #1e201e;
+            border-radius: 50%;
+        }
+        @keyframes subtle-pulse {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        .pulse-active {
+            animation: subtle-pulse 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-4xl rounded-full border border-white/10 bg-surface/40 backdrop-blur-2xl shadow-2xl z-50 flex justify-between items-center px-8 py-4">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Rootly</span>
+
+</div>
+<button class="material-symbols-outlined text-primary active:scale-95 transition-transform duration-200" id="menu-toggle-btn">menu</button>
+</nav>
+<main class="pt-32 pb-24 px-margin-mobile md:px-margin-desktop max-w-max-width mx-auto">
+<!-- Header -->
+<header class="mb-16">
+<h1 class="font-headline-lg text-headline-lg text-primary mb-2">Mission Objectives</h1>
+<p class="text-on-surface-variant font-body-lg text-body-lg max-w-2xl">High-fidelity tracking for planetary resilience. Performance telemetry for the carbon-conscious operator.</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Primary Data -->
+<div class="lg:col-span-8 space-y-8">
+<!-- Habit Tracking Grid -->
+<section class="glass-card p-8 rounded-xl">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-1">Stability Vectors</h2>
+<p class="text-on-surface-variant font-label-md text-label-md mono-text">30-DAY OPERATIONAL LOG</p>
+</div>
+<div class="flex items-center gap-4 mono-text text-[10px] text-on-surface-variant">
+<div class="flex items-center gap-1"><span class="dot bg-primary"></span> VALIDATED</div>
+<div class="flex items-center gap-1"><span class="dot bg-surface-variant"></span> NULL</div>
+</div>
+</div>
+<div class="space-y-6">
+<!-- Habit Row -->
+<div class="space-y-2">
+<div class="flex justify-between items-center mono-text text-label-md">
+<span class="text-on-surface">Plant-Based Diet</span>
+<span class="text-primary">86% EFFICIENCY</span>
+</div>
+<div class="performance-grid">
+<!-- Generated Dots -->
+<script>
+                                    for(let i=0; i<30; i++) {
+                                        const success = Math.random() > 0.15;
+                                        document.write(`<div class="h-4 w-full rounded-sm ${success ? 'bg-primary/40' : 'bg-surface-variant'} border border-white/5"></div>`);
+                                    }
+                                </script><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div>
+</div>
+</div>
+<!-- Habit Row -->
+<div class="space-y-2">
+<div class="flex justify-between items-center mono-text text-label-md">
+<span class="text-on-surface">Public Transit</span>
+<span class="text-primary">92% EFFICIENCY</span>
+</div>
+<div class="performance-grid">
+<script>
+                                    for(let i=0; i<30; i++) {
+                                        const success = Math.random() > 0.08;
+                                        document.write(`<div class="h-4 w-full rounded-sm ${success ? 'bg-primary/40' : 'bg-surface-variant'} border border-white/5"></div>`);
+                                    }
+                                </script><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div>
+</div>
+</div>
+<!-- Habit Row -->
+<div class="space-y-2">
+<div class="flex justify-between items-center mono-text text-label-md">
+<span class="text-on-surface">Zero Waste</span>
+<span class="text-secondary">54% EFFICIENCY</span>
+</div>
+<div class="performance-grid">
+<script>
+                                    for(let i=0; i<30; i++) {
+                                        const success = Math.random() > 0.46;
+                                        document.write(`<div class="h-4 w-full rounded-sm ${success ? 'bg-primary/40' : 'bg-surface-variant'} border border-white/5"></div>`);
+                                    }
+                                </script><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-primary/40 border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div><div class="h-4 w-full rounded-sm bg-surface-variant border border-white/5"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Current Goals -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Mission A -->
+<div class="glass-card p-8 rounded-xl flex items-center justify-between group overflow-hidden relative">
+<div class="z-10">
+<span class="mono-text text-[10px] text-primary mb-2 block tracking-widest">ACTIVE MISSION_01</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4 leading-tight">Reduce Grid<br>Dependency</h3>
+<div class="space-y-1 mono-text text-[11px] text-on-surface-variant">
+<div class="">LAST SYNC: 14:02 GMT</div>
+<div class="">LOAD: 2.4kW AVG</div>
+</div>
+</div>
+<div class="relative z-10 flex flex-col items-center">
+<div class="circular-progress" style="--progress: 230deg; background: conic-gradient(rgb(145, 216, 131) 230.4deg, transparent 0deg);"></div>
+<span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-headline-md text-primary">64%</span>
+</div>
+<!-- Decorative background light -->
+<div class="absolute -right-16 -top-16 w-48 h-48 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors"></div>
+</div>
+<!-- Mission B -->
+<div class="glass-card p-8 rounded-xl flex items-center justify-between group overflow-hidden relative">
+<div class="z-10">
+<span class="mono-text text-[10px] text-primary mb-2 block tracking-widest">ACTIVE MISSION_02</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4 leading-tight">Zero-Emission<br>Commute</h3>
+<div class="space-y-1 mono-text text-[11px] text-on-surface-variant">
+<div class="">DISTANCE: 142.4km</div>
+<div class="">OFFSET: 24kg CO2</div>
+</div>
+</div>
+<div class="relative z-10 flex flex-col items-center">
+<div class="circular-progress" style="--progress: 295deg; background: conic-gradient(rgb(145, 216, 131) 295.2deg, transparent 0deg);"></div>
+<span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-headline-md text-primary">82%</span>
+</div>
+<div class="absolute -right-16 -top-16 w-48 h-48 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors"></div>
+</div>
+</div>
+<!-- Challenges -->
+<div class="space-y-6">
+<h2 class="font-headline-md text-headline-md text-on-surface">Critical Challenges</h2>
+<!-- Weekly Challenge -->
+<div class="glass-card p-1 rounded-full pr-8 flex items-center gap-6 group hover:border-primary/30 transition-all duration-300">
+<div class="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">speed</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-center">
+<h4 class="font-headline-md text-[20px] text-on-surface">Weekly Challenge: The 2km Protocol</h4>
+<span class="mono-text text-label-md text-primary">+4.2kg CO2 PROJECTION</span>
+</div>
+<p class="text-on-surface-variant font-label-md text-label-md">Convert all trips under 2km to kinetic mobility.</p>
+</div>
+<button class="bg-primary text-on-primary px-8 py-2 rounded-full font-label-md text-label-md hover:brightness-110 active:scale-95 transition-all">Commence</button>
+</div>
+<!-- Monthly Challenge -->
+<div class="glass-card p-1 rounded-full pr-8 flex items-center gap-6 group hover:border-primary/30 transition-all duration-300">
+<div class="w-16 h-16 rounded-full bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">wb_sunny</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-center">
+<h4 class="font-headline-md text-[20px] text-on-surface">Monthly Challenge: Solar Harvest</h4>
+<span class="mono-text text-label-md text-primary">+120kWh PROJECTED</span>
+</div>
+<p class="text-on-surface-variant font-label-md text-label-md">Maximize daytime appliance usage via peak solar alignment.</p>
+</div>
+<button class="bg-primary text-on-primary px-8 py-2 rounded-full font-label-md text-label-md hover:brightness-110 active:scale-95 transition-all">Commence</button>
+</div>
+</div>
+</div>
+<!-- Right Column: Sidebar Intelligence -->
+<div class="lg:col-span-4 space-y-8">
+<!-- Performance Sidebar Profile -->
+<aside class="glass-card p-8 rounded-xl sticky top-32 border-primary/20">
+<div class="flex items-center gap-4 mb-10">
+<div class="relative">
+<img class="w-16 h-16 rounded-full object-cover grayscale brightness-75" data-alt="A professional headshot of a person with a focused expression, high-contrast black and white lighting, deep shadows, professional setting, minimalist aesthetic, sharp focus, tech-native personality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHP3V4kl2xkibQtH8e1F50V0gHt874QSwviWUcldxSz4-pZWeGYSlkyPTu-DHYcUanK0iZUC8_Q1jkdTpfARR2uRwdx5ZpwjCC9KyMIkajar4LFVkiUVgzYmhXsOF6VlfX2ltrDaUxTeSqQePVvLV6Gks7W7IL5ZcqpfDX63fRMV1OAsXoOf-zfcA2ho_OlB8naB8-GAt7lqcBxOlR9-QpOfsEmRZprR4PsTevD-iAdDt6DoHMct8aDtXVp6YJehjlys6b8meOPSPU">
+<div class="absolute inset-0 border-2 border-primary rounded-full pulse-active"></div>
+</div>
+<div>
+<div class="font-headline-md text-[18px] text-on-surface">Operator 42-Alpha</div>
+<div class="mono-text text-[10px] text-primary tracking-tighter">LVL 08 — SYSTEM ARCHITECT</div>
+</div>
+</div>
+<div class="space-y-8">
+<div>
+<h3 class="mono-text text-[12px] text-on-surface-variant mb-6 uppercase tracking-[0.2em]">Verified Milestones</h3>
+<div class="space-y-6">
+<!-- Milestone Item -->
+<div class="flex gap-4 border-l border-primary/30 pl-4 py-1">
+<div class="space-y-1">
+<div class="font-label-md text-label-md text-on-surface">14kg CO2 Sequestered</div>
+<div class="mono-text text-[11px] text-on-surface-variant">T-MINUS 04:22:15</div>
+</div>
+</div>
+<!-- Milestone Item -->
+<div class="flex gap-4 border-l border-white/10 pl-4 py-1">
+<div class="space-y-1">
+<div class="font-label-md text-label-md text-on-surface">Grid Autonomy Reached</div>
+<div class="mono-text text-[11px] text-on-surface-variant">T-MINUS 12:45:00</div>
+</div>
+</div>
+<!-- Milestone Item -->
+<div class="flex gap-4 border-l border-white/10 pl-4 py-1">
+<div class="space-y-1">
+<div class="font-label-md text-label-md text-on-surface">Mobility Shift Complete</div>
+<div class="mono-text text-[11px] text-on-surface-variant">T-MINUS 28:00:00</div>
+</div>
+</div>
+<!-- Milestone Item -->
+<div class="flex gap-4 border-l border-white/10 pl-4 py-1">
+<div class="space-y-1">
+<div class="font-label-md text-label-md text-on-surface">Water Reclamation Opt-in</div>
+<div class="mono-text text-[11px] text-on-surface-variant">T-MINUS 74:10:22</div>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-8 border-t border-white/10">
+<div class="flex justify-between items-center mb-4">
+<span class="mono-text text-[10px] text-on-surface-variant uppercase">Planetary Health Index</span>
+<span class="mono-text text-[10px] text-primary">+0.002%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[72%]"></div>
+</div>
+</div>
+<button class="w-full py-4 rounded-xl border border-primary/50 text-primary mono-text text-label-md hover:bg-primary/10 transition-colors uppercase tracking-widest">
+                            Export Compliance Data
+                        </button>
+</div>
+</aside>
+</div>
+</div>
+</main>
+<!-- SideNavBar (Hidden on Mobile per responsive pivot rule) -->
+<div class="hidden md:flex fixed right-0 h-full w-80 bg-surface-container-low/95 backdrop-blur-2xl border-l border-white/5 shadow-2xl flex-col p-6 gap-4 z-40 transform translate-x-[100%] hover:translate-x-0 transition-transform duration-500 ease-in-out group">
+<!-- Interactive Trigger Handle -->
+<div class="absolute top-1/2 -left-10 -translate-y-1/2 w-10 h-24 bg-surface-container-low/95 backdrop-blur-2xl rounded-l-xl border-y border-l border-white/5 flex items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-primary group-hover:rotate-180 transition-transform">chevron_left</span>
+</div>
+<div class="flex flex-col gap-6">
+<div class="flex items-center gap-4 p-2">
+<img alt="User Profile" class="w-10 h-10 rounded-full object-cover" data-alt="Minimalist abstract portrait of a tech user, macro details of digital interfaces reflected in glasses, deep green and black tones, professional photography, cinematic lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeMUhyFN5uVfvGtzrozs8l_9fDIQBQlpRswE8sUM06O7O9w158ZAxPIVu7UdYJM-ABJFC_dK8x5LPOkmvXHPon9mvZEDvHZB6D-YeIo_t1ndTZm91zO7jeqf2YoEsMkifHh8MBrjruDWV9AY1s4Pakz6JfyHPe8MCUMvjoC5VRI71OJ8OWXEPKo8cohJ5ZyL8purSnstj-pATNjqvyOT_nSbTvyICbzjDFGcdv1QLmkoJWcxCoX5FLgWjTdZ65Bykj8T7sKUQfTQrC">
+<div>
+<h4 class="font-headline-md text-[16px] text-primary">Rootly Intelligence</h4>
+<p class="font-label-md text-[11px] text-on-surface-variant">Carbon Conscious</p>
+</div>
+</div>
+<div class="space-y-1">
+<button class="w-full flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-300 font-label-md text-label-md rounded-xl">
+<span class="material-symbols-outlined">dashboard</span> Command Center
+                </button>
+<button class="w-full flex items-center gap-4 px-4 py-3 bg-primary-container text-on-primary-container font-label-md text-label-md rounded-xl">
+<span class="material-symbols-outlined">psychology</span> AI Coach
+                </button>
+<button class="w-full flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-300 font-label-md text-label-md rounded-xl">
+<span class="material-symbols-outlined">chat_bubble</span> Logging
+                </button>
+<button class="w-full flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-300 font-label-md text-label-md rounded-xl">
+<span class="material-symbols-outlined">mic</span> Voice
+                </button>
+<button class="w-full flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-300 font-label-md text-label-md rounded-xl">
+<span class="material-symbols-outlined">alt_route</span> Routes
+                </button>
+<button class="w-full flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-variant/50 transition-all duration-300 font-label-md text-label-md rounded-xl">
+<span class="material-symbols-outlined">analytics</span> Reports
+                </button>
+</div>
+</div>
+</div>
+<!-- Background Atmospheric Effect -->
+<div class="fixed inset-0 -z-10 pointer-events-none">
+<div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-0 left-0 w-[800px] h-[800px] bg-secondary-container/5 rounded-full blur-[150px]"></div>
+</div>
+<script>
+        // Micro-interaction for circular progress animation simulation
+        document.querySelectorAll('.circular-progress').forEach(progress => {
+            let start = 0;
+            const target = parseInt(progress.nextElementSibling.innerText);
+            const duration = 1500;
+            const startTime = performance.now();
+
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progressVal = Math.min(elapsed / duration, 1);
+                const currentDegree = progressVal * target * 3.6;
+                progress.style.background = `conic-gradient(#91d883 ${currentDegree}deg, transparent 0deg)`;
+                
+                if (progressVal < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            requestAnimationFrame(update);
+        });
+    </script>
+
+
+<div id="mobile-menu-overlay" class="fixed inset-0 z-[60] bg-background/80 backdrop-blur-xl hidden flex-col items-center justify-center gap-8"><button id="close-menu" class="absolute top-8 right-8 material-symbols-outlined text-primary text-[32px]">close</button><a class="text-headline-md text-on-surface hover:text-primary transition-colors" href="#">Coach</a><a class="text-headline-md text-on-surface hover:text-primary transition-colors" href="#">Insights</a><a class="text-headline-md text-on-surface hover:text-primary transition-colors" href="#">Logging</a><a class="text-headline-md text-on-surface hover:text-primary transition-colors" href="#">Impact</a></div><script>const menuBtn = document.getElementById('menu-toggle-btn'); const closeBtn = document.getElementById('close-menu'); const overlay = document.getElementById('mobile-menu-overlay'); if(menuBtn && overlay) { menuBtn.addEventListener('click', () => overlay.classList.remove('hidden')); } if(closeBtn && overlay) { closeBtn.addEventListener('click', () => overlay.classList.add('hidden')); } overlay.addEventListener('click', (e) => { if(e.target === overlay) overlay.classList.add('hidden'); });</script></body></html>

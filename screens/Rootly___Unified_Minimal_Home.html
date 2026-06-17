@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rootly | Personal Carbon Coach</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary": "#003a03",
+                      "on-primary-fixed-variant": "#0c530e",
+                      "surface-container-highest": "#333533",
+                      "on-background": "#e3e3df",
+                      "on-primary-container": "#81c674",
+                      "error": "#ffb4ab",
+                      "outline": "#8a9385",
+                      "on-tertiary-fixed": "#1e1c0b",
+                      "background": "#121412",
+                      "surface-container-lowest": "#0d0f0d",
+                      "error-container": "#93000a",
+                      "surface-container-high": "#292a28",
+                      "primary-fixed": "#acf59d",
+                      "on-secondary-container": "#87c979",
+                      "surface-container-low": "#1a1c1a",
+                      "secondary-fixed-dim": "#94d786",
+                      "on-secondary": "#003a02",
+                      "surface-dim": "#121412",
+                      "tertiary-fixed": "#e8e3c7",
+                      "inverse-on-surface": "#2f312e",
+                      "primary-fixed-dim": "#91d883",
+                      "tertiary-fixed-dim": "#ccc7ac",
+                      "on-error-container": "#ffdad6",
+                      "on-tertiary-fixed-variant": "#4a4733",
+                      "surface-container": "#1e201e",
+                      "primary-container": "#0d530e",
+                      "outline-variant": "#41493d",
+                      "secondary-fixed": "#b0f49f",
+                      "inverse-surface": "#e3e3df",
+                      "on-surface": "#e3e3df",
+                      "on-surface-variant": "#c0c9b9",
+                      "on-primary-fixed": "#002201",
+                      "on-tertiary": "#33311e",
+                      "tertiary-container": "#4a4833",
+                      "primary": "#91d883",
+                      "on-error": "#690005",
+                      "surface-tint": "#91d883",
+                      "secondary-container": "#165513",
+                      "secondary": "#94d786",
+                      "inverse-primary": "#2a6c25",
+                      "surface-bright": "#383a37",
+                      "surface": "#121412",
+                      "tertiary": "#ccc7ac",
+                      "surface-variant": "#333533",
+                      "on-secondary-fixed-variant": "#135211",
+                      "on-tertiary-container": "#bbb79c",
+                      "on-secondary-fixed": "#002201"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-desktop": "64px",
+                      "margin-mobile": "20px",
+                      "unit": "4px",
+                      "gutter": "24px",
+                      "max-width": "1440px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": ["Geist"],
+                      "body-md": ["Hanken Grotesk"],
+                      "label-md": ["Geist"],
+                      "headline-lg": ["Geist"],
+                      "body-lg": ["Hanken Grotesk"],
+                      "headline-md": ["Geist"]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "headline-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "headline-md": ["32px", {"lineHeight": "1.2", "fontWeight": "500"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #121412;
+            color: #e3e3df;
+            font-family: 'Hanken Grotesk', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-card {
+            background: rgba(30, 32, 30, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .score-glow {
+            text-shadow: 0 0 30px rgba(145, 216, 131, 0.3);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-margin-mobile md:px-margin-desktop py-4">
+<nav class="bg-surface-container/40 backdrop-blur-2xl border border-white/10 shadow-2xl rounded-full mx-auto w-full max-w-7xl flex items-center justify-between px-8 py-3">
+<div class="flex items-center gap-8">
+<span class="font-headline-lg text-headline-md font-bold text-primary tracking-tight">Rootly</span>
+<div class="hidden lg:flex items-center gap-6">
+<a class="text-primary border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">Home</a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors" href="#">Features</a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors" href="#">AI Coach</a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors" href="#">Reports</a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors" href="#">Goals</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors">Sign In</button>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-bold text-label-md active:scale-95 transition-all">Get Started</button>
+</div>
+</nav>
+</header>
+<main class="pt-32 pb-24 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto space-y-20">
+<!-- Hero: Simplified Greeting & Score -->
+<section class="text-center space-y-8 py-10">
+<div class="space-y-2">
+<h1 class="font-headline-md text-headline-md text-on-surface opacity-90">Good morning, Alex.</h1>
+<p class="font-body-lg text-body-lg text-primary">You're 12% ahead of your weekly goal.</p>
+</div>
+<div class="relative inline-block">
+<div class="score-glow font-headline-lg text-[64px] md:text-[96px] font-bold text-primary leading-none flex items-baseline justify-center gap-2">
+                42.8
+                <span class="text-headline-md text-on-surface-variant font-medium">kg CO2</span>
+</div>
+<div class="mt-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px]">trending_down</span>
+                -3.4kg from yesterday
+            </div>
+</div>
+</section>
+<!-- Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Primary AI Insight Card -->
+<div class="lg:col-span-8 glass-card rounded-xl p-10 relative overflow-hidden group">
+<div class="relative z-10 space-y-6">
+<div class="flex items-center gap-3">
+<span class="bg-primary text-on-primary px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Priority Action</span>
+<span class="text-on-surface-variant font-label-md text-label-md">AI Coach Insight</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-md max-w-xl leading-tight text-white">
+                    Optimize Tomorrow's Route. <span class="text-primary">Potential Reduction: 8.4kg.</span>
+</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg leading-relaxed">
+                    Based on your 9:00 AM meeting in the city, switching to the express rail line instead of driving will save 12 minutes and significantly lower your daily footprint.
+                </p>
+<div class="flex flex-wrap gap-4 pt-4">
+<button class="bg-primary text-on-primary px-8 py-3 rounded-full font-bold text-label-md flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all">
+                        Apply Optimized Route
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="border border-outline/30 text-on-surface px-8 py-3 rounded-full font-medium text-label-md hover:bg-white/5 active:scale-95 transition-all">
+                        Dismiss
+                    </button>
+</div>
+</div>
+<!-- Subtle background accent -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[100px] pointer-events-none"></div>
+</div>
+<!-- Weekly Progress (Consolidated Mini Card) -->
+<div class="lg:col-span-4 glass-card rounded-xl p-10 flex flex-col items-center justify-center text-center h-full border border-primary/10">
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest mb-8">Weekly Progress</p>
+<div class="relative inline-flex items-center justify-center mb-8">
+<svg class="w-40 h-40">
+<circle class="text-surface-container-highest" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-width="10"></circle>
+<circle class="text-primary" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="439.8" stroke-dashoffset="65.97" stroke-linecap="round" stroke-width="10"></circle>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="font-headline-md text-headline-md text-white leading-none">85%</span>
+<span class="font-label-md text-label-md text-on-surface-variant mt-1">Goal</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant italic px-4">
+                "You're 2.4kg ahead of last week's pace. Maintain current momentum."
+            </p>
+</div>
+<!-- Recommendations Grid -->
+<div class="lg:col-span-12">
+<h3 class="font-headline-md text-2xl mb-8">Daily Protocol</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Transit -->
+<div class="glass-card p-6 rounded-xl group hover:border-primary/40 transition-colors">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4">
+<span class="material-symbols-outlined">commute</span>
+</div>
+<h4 class="font-bold text-on-surface mb-2">Transportation</h4>
+<p class="text-sm text-on-surface-variant mb-6">Your commute accounts for 62% of emissions today. Consider a carpool.</p>
+<div class="text-primary font-bold text-sm">-3.2kg Potential Save</div>
+</div>
+<!-- Food -->
+<div class="glass-card p-6 rounded-xl group hover:border-primary/40 transition-colors">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<h4 class="font-bold text-on-surface mb-2">Food &amp; Dining</h4>
+<p class="text-sm text-on-surface-variant mb-6">Switching lunch to a plant-based option reduces daily impact by 18%.</p>
+<div class="text-primary font-bold text-sm">-1.8kg Potential Save</div>
+</div>
+<!-- Energy -->
+<div class="glass-card p-6 rounded-xl group hover:border-primary/40 transition-colors">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<h4 class="font-bold text-on-surface mb-2">Home Energy</h4>
+<p class="text-sm text-on-surface-variant mb-6">Heating peak ends at 8 PM. Shifting high-usage tasks saves costs.</p>
+<div class="text-primary font-bold text-sm">-2.5kg Potential Save</div>
+</div>
+</div>
+</div>
+<!-- Activity Timeline -->
+<div class="lg:col-span-12 pt-8">
+<div class="flex items-center justify-between mb-8">
+<h3 class="font-headline-md text-2xl">Impact Timeline</h3>
+<button class="text-primary font-label-md text-label-md hover:underline">View History</button>
+</div>
+<div class="flex overflow-x-auto gap-6 pb-6 no-scrollbar">
+<!-- Log Item 1 -->
+<div class="flex-none w-64 glass-card p-5 rounded-xl border-l-2 border-l-primary flex flex-col justify-between h-32">
+<div class="flex justify-between items-start">
+<span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-tighter">10:45 AM</span>
+<span class="bg-primary/20 text-primary text-[10px] px-2 py-0.5 rounded-full font-bold">SAVED</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Walked to market</p>
+<p class="text-[11px] text-on-surface-variant mt-1">-0.8kg CO2</p>
+</div>
+</div>
+<!-- Log Item 2 -->
+<div class="flex-none w-64 glass-card p-5 rounded-xl border-l-2 border-l-primary flex flex-col justify-between h-32">
+<div class="flex justify-between items-start">
+<span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-tighter">12:45 PM</span>
+<span class="bg-primary/20 text-primary text-[10px] px-2 py-0.5 rounded-full font-bold">SAVED</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Plant-based lunch</p>
+<p class="text-[11px] text-on-surface-variant mt-1">-2.1kg CO2</p>
+</div>
+</div>
+<!-- Log Item 3 -->
+<div class="flex-none w-64 glass-card p-5 rounded-xl border-l-2 border-l-outline/30 flex flex-col justify-between h-32 opacity-70">
+<div class="flex justify-between items-start">
+<span class="text-[10px] text-on-surface-variant font-bold uppercase tracking-tighter">09:00 AM</span>
+<span class="bg-white/10 text-on-surface-variant text-[10px] px-2 py-0.5 rounded-full font-bold uppercase">Logged</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Smart thermostat</p>
+<p class="text-[11px] text-on-surface-variant mt-1">Automatic adjustment</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Quick Actions -->
+<div class="fixed bottom-10 left-1/2 -translate-x-1/2 z-50">
+<div class="bg-surface-container-low/80 backdrop-blur-3xl p-2 rounded-full border border-white/10 shadow-2xl flex items-center gap-2">
+<button class="bg-primary text-on-primary px-8 py-3 rounded-full font-bold text-label-md flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined">add</span>
+            Log Activity
+        </button>
+<div class="h-8 w-px bg-white/10 mx-2"></div>
+<button class="w-12 h-12 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-white/5 transition-all active:scale-90" title="Voice Command">
+<span class="material-symbols-outlined">mic</span>
+</button>
+<button class="w-12 h-12 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-white/5 transition-all active:scale-90" title="Ask Rootly">
+<span class="material-symbols-outlined">psychology</span>
+</button>
+</div>
+</div>
+<!-- Footer -->
+<footer class="w-full border-t border-outline-variant/30 bg-background pt-24 pb-12">
+<div class="max-w-7xl mx-auto px-margin-desktop flex flex-col md:flex-row justify-between items-start gap-12">
+<div class="space-y-4">
+<span class="font-headline-lg-mobile text-headline-md font-bold text-on-surface tracking-tighter">Rootly</span>
+<p class="text-on-surface-variant font-body-md text-body-md max-w-sm">
+                Empowering high-performance lifestyles with precision carbon intelligence.
+            </p>
+<p class="text-[12px] text-on-surface-variant opacity-50">© 2024 Rootly AI. Precision Engineering for Earth.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-12">
+<div class="flex flex-col gap-4">
+<h4 class="text-primary font-label-md text-label-md uppercase tracking-widest">Platform</h4>
+<a class="text-on-surface-variant font-body-md text-sm hover:text-primary transition-colors" href="#">Methodology</a>
+<a class="text-on-surface-variant font-body-md text-sm hover:text-primary transition-colors" href="#">Data Privacy</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="text-primary font-label-md text-label-md uppercase tracking-widest">Company</h4>
+<a class="text-on-surface-variant font-body-md text-sm hover:text-primary transition-colors" href="#">Terms</a>
+<a class="text-on-surface-variant font-body-md text-sm hover:text-primary transition-colors" href="#">Security</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="text-primary font-label-md text-label-md uppercase tracking-widest">Support</h4>
+<a class="text-on-surface-variant font-body-md text-sm hover:text-primary transition-colors" href="#">Help Center</a>
+<a class="text-on-surface-variant font-body-md text-sm hover:text-primary transition-colors" href="#">Status</a>
+</div>
+</div>
+</div>
+</footer>
+<script>
+    // Micro-interactions and accessibility
+    document.querySelectorAll('button, a').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            // Potential for subtle haptic feedback triggers here
+        });
+    });
+</script>
+</body></html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rootly | Weekly Intelligence Briefing</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .liquid-glass {
+            background: rgba(18, 20, 18, 0.4);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .obsidian-card {
+            background: #1a1c1a;
+            border: 1px solid rgba(145, 216, 131, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .obsidian-card:hover {
+            border-color: rgba(145, 216, 131, 0.2);
+            background: #1e201e;
+        }
+        .progress-ring-circle {
+            transition: stroke-dashoffset 1s ease-in-out;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121412;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333533;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0d530e;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "primary": "#91d883",
+                "on-primary": "#003a03",
+                "primary-container": "#0d530e",
+                "on-primary-container": "#81c674",
+                "surface": "#121412",
+                "background": "#121412",
+                "on-surface": "#e3e3df",
+                "on-surface-variant": "#c0c9b9",
+                "error": "#ffb4ab",
+                "error-container": "#93000a"
+              },
+              "borderRadius": {
+                "DEFAULT": "1rem",
+                "lg": "2rem",
+                "xl": "3rem",
+                "full": "9999px"
+              },
+              "fontFamily": {
+                "sans": ["Geist", "sans-serif"],
+                "headline": ["Geist", "sans-serif"],
+                "body": ["Hanken Grotesk", "sans-serif"]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-primary">
+<!-- Floating Top Navigation Bar -->
+<header class="fixed top-6 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-4xl z-50">
+<nav class="liquid-glass rounded-full px-6 py-3 flex justify-between items-center">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 bg-primary-container rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">eco</span>
+</div>
+<span class="font-headline font-bold text-lg tracking-tight">Rootly</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex gap-8 text-sm font-medium">
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Overview</a>
+<a class="text-primary" href="#">Reports</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Tactical</a>
+</div>
+<div class="h-4 w-px bg-white/10 hidden md:block"></div>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">more_vert</button>
+</div>
+</nav>
+</header>
+<main class="pt-32 pb-24 px-6 max-w-4xl mx-auto">
+<!-- Hero Section -->
+<section class="text-center mb-16 space-y-4">
+<span class="inline-block px-4 py-1 rounded-full bg-primary-container/20 border border-primary-container/30 text-primary text-[10px] font-bold uppercase tracking-widest">
+                Mission Intelligence
+            </span>
+<h1 class="font-headline text-4xl md:text-5xl font-black tracking-tight">
+                Weekly Intelligence <span class="text-primary">Briefing</span>
+</h1>
+<p class="text-on-surface-variant text-lg">
+                Performance cycle analysis: <span class="text-on-surface font-medium">Oct 14 — Oct 20</span>
+</p>
+</section>
+<!-- Core Metric: Carbon Score -->
+<section class="mb-16 flex flex-col items-center">
+<div class="relative w-64 h-64 flex items-center justify-center">
+<svg class="w-full h-full" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="#1a1c1a" stroke-width="6"></circle>
+<circle class="progress-ring-circle" cx="50" cy="50" fill="none" r="45" stroke="url(#gradient)" stroke-dasharray="283" stroke-dashoffset="45" stroke-linecap="round" stroke-width="6"></circle>
+<defs>
+<lineargradient id="gradient" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="#0d530e"></stop>
+<stop offset="100%" stop-color="#91d883"></stop>
+</lineargradient>
+</defs>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-headline text-6xl font-black leading-none">84</span>
+<span class="text-[10px] text-primary font-bold uppercase tracking-[0.2em] mt-2">Carbon Score</span>
+</div>
+</div>
+<div class="mt-8 text-center max-w-md">
+<p class="text-on-surface-variant italic">
+                    "Your narrative this week is defined by <span class="text-primary">efficiency</span>. Significant optimization in commute vectors led to a 14% improvement over last baseline."
+                </p>
+</div>
+</section>
+<!-- Content Modules: Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Major Contributors -->
+<div class="obsidian-card rounded-lg p-8 md:col-span-1 flex flex-col">
+<h3 class="font-headline text-xs font-bold uppercase tracking-widest text-primary mb-8 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">analytics</span>
+                    Major Contributors
+                </h3>
+<div class="space-y-6">
+<div class="space-y-2">
+<div class="flex justify-between text-sm">
+<span class="text-on-surface-variant">Transport Efficiency</span>
+<span class="font-bold">42%</span>
+</div>
+<div class="h-1 bg-surface rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[42%]"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-sm">
+<span class="text-on-surface-variant">Utilities &amp; Thermal</span>
+<span class="font-bold">30%</span>
+</div>
+<div class="h-1 bg-surface rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[30%]"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-sm">
+<span class="text-on-surface-variant">Procurement</span>
+<span class="font-bold">28%</span>
+</div>
+<div class="h-1 bg-surface rounded-full overflow-hidden">
+<div class="h-full bg-primary/40 w-[28%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Optimization Deltas -->
+<div class="obsidian-card rounded-lg p-8 md:col-span-1">
+<h3 class="font-headline text-xs font-bold uppercase tracking-widest text-primary mb-8 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+                    Optimization Deltas
+                </h3>
+<div class="space-y-4">
+<div class="flex gap-4 items-start">
+<div class="w-1 h-1 rounded-full bg-primary mt-2 flex-shrink-0"></div>
+<div>
+<p class="text-sm font-bold text-primary">Positive Change</p>
+<p class="text-xs text-on-surface-variant mt-1">Reduced meat consumption by 40% vs last week.</p>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<div class="w-1 h-1 rounded-full bg-error mt-2 flex-shrink-0"></div>
+<div>
+<p class="text-sm font-bold text-error">Missed Opportunity</p>
+<p class="text-xs text-on-surface-variant mt-1">Thermostat remained at 22°C while the house was empty.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Next Action Plan -->
+<div class="md:col-span-2 space-y-6">
+<div class="flex justify-between items-center px-2">
+<h3 class="font-headline text-xs font-bold uppercase tracking-widest text-primary">Tactical Objectives</h3>
+<span class="text-[10px] text-on-surface-variant uppercase">Cycle W43</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Action Card 1 -->
+<div class="obsidian-card rounded-lg p-6 group cursor-pointer">
+<div class="flex justify-between items-start mb-4">
+<span class="text-[10px] font-bold text-primary-container bg-primary px-2 py-0.5 rounded uppercase tracking-tighter">High Impact</span>
+<button class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-lg">calendar_add_on</button>
+</div>
+<h4 class="font-headline font-bold text-lg">Seal Energy Leaks</h4>
+<p class="text-sm text-on-surface-variant mt-2">Automate HVAC shutdown protocols via AI Coach for non-operational hours.</p>
+<div class="mt-6 pt-4 border-t border-white/5 flex justify-between items-center">
+<span class="text-[10px] text-on-surface-variant">EST. DELTA: -8%</span>
+<span class="text-primary font-bold text-xs">Commit</span>
+</div>
+</div>
+<!-- Action Card 2 -->
+<div class="obsidian-card rounded-lg p-6 group cursor-pointer">
+<div class="flex justify-between items-start mb-4">
+<span class="text-[10px] font-bold text-on-surface-variant bg-surface px-2 py-0.5 rounded uppercase tracking-tighter">Lifestyle</span>
+<button class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors text-lg">sync</button>
+</div>
+<h4 class="font-headline font-bold text-lg">The 2km Challenge</h4>
+<p class="text-sm text-on-surface-variant mt-2">Commit to zero car use for trips under 2km. Optimal weather forecast.</p>
+<div class="mt-6 pt-4 border-t border-white/5 flex justify-between items-center">
+<span class="text-[10px] text-on-surface-variant">EST. DELTA: -4%</span>
+<span class="text-primary font-bold text-xs">Sync</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Minimal Footer -->
+<footer class="mt-20 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex gap-4">
+<button class="flex items-center gap-2 bg-primary text-on-primary px-6 py-2.5 rounded-full text-xs font-bold hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-sm">share</span> Share Analysis
+                </button>
+<button class="flex items-center gap-2 border border-white/10 text-on-surface-variant px-6 py-2.5 rounded-full text-xs font-bold hover:bg-white/5 transition-all">
+<span class="material-symbols-outlined text-sm">download</span> Export PDF
+                </button>
+</div>
+<div class="flex flex-col items-end opacity-20 hover:opacity-100 transition-opacity">
+<span class="text-[10px] font-bold tracking-[0.3em] uppercase">Data Fidelity Verified</span>
+<span class="text-[8px] mt-1 uppercase">Rootly Core v4.1.2-ALPHA</span>
+</div>
+</footer>
+</main>
+<script>
+        // Simple entry animation for progress ring
+        window.addEventListener('load', () => {
+            const circle = document.querySelector('.progress-ring-circle');
+            const targetOffset = 45; // Simulated 84% based on dasharray 283
+            circle.style.strokeDashoffset = '283';
+            setTimeout(() => {
+                circle.style.strokeDashoffset = targetOffset;
+            }, 500);
+        });
+
+        // Interactive states for bento cards
+        document.querySelectorAll('.obsidian-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.classList.add('scale-[0.98]');
+                setTimeout(() => this.classList.remove('scale-[0.98]'), 150);
+            });
+        });
+    </script>
+</body></html>

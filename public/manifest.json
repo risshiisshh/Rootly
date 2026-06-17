@@ -1,0 +1,10 @@
+{
+  "name": "Rootly — AI Carbon Footprint Coach",
+  "short_name": "Rootly",
+  "description": "Rootly is an AI-powered sustainability coach that helps you understand, track, and reduce your carbon footprint with precision intelligence.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#121412",
+  "theme_color": "#91d883",
+  "icons": []
+}

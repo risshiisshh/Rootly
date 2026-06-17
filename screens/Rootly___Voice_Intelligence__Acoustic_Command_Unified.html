@@ -1,0 +1,334 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Rootly | Acoustic Command</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Hanken+Grotesk:wght@100..900&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-module {
+            background: rgba(30, 32, 30, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+        }
+        .mic-glow {
+            box-shadow: 0 0 20px rgba(145, 216, 131, 0.3);
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
+        }
+        .kinetic-gradient {
+            background: linear-gradient(135deg, #0d530e 0%, #91d883 100%);
+        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #41493d; border-radius: 10px; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline-variant": "#41493d",
+                      "outline": "#8a9385",
+                      "on-secondary-fixed-variant": "#135211",
+                      "on-tertiary-fixed-variant": "#4a4733",
+                      "inverse-surface": "#e3e3df",
+                      "surface-container-low": "#1a1c1a",
+                      "inverse-on-surface": "#2f312e",
+                      "on-primary-container": "#81c674",
+                      "secondary-fixed-dim": "#94d786",
+                      "secondary-fixed": "#b0f49f",
+                      "secondary-container": "#165513",
+                      "on-primary-fixed-variant": "#0c530e",
+                      "surface-container": "#1e201e",
+                      "tertiary-container": "#4a4833",
+                      "on-primary": "#003a03",
+                      "surface-dim": "#121412",
+                      "on-tertiary-container": "#bbb79c",
+                      "on-error": "#690005",
+                      "surface": "#121412",
+                      "surface-tint": "#91d883",
+                      "surface-container-lowest": "#0d0f0d",
+                      "error": "#ffb4ab",
+                      "inverse-primary": "#2a6c25",
+                      "background": "#121412",
+                      "tertiary": "#ccc7ac",
+                      "on-secondary": "#003a02",
+                      "surface-variant": "#333533",
+                      "on-background": "#e3e3df",
+                      "secondary": "#94d786",
+                      "primary-container": "#0d530e",
+                      "on-secondary-fixed": "#002201",
+                      "error-container": "#93000a",
+                      "primary-fixed": "#acf59d",
+                      "surface-container-high": "#292a28",
+                      "on-tertiary-fixed": "#1e1c0b",
+                      "primary-fixed-dim": "#91d883",
+                      "on-surface": "#e3e3df",
+                      "primary": "#91d883",
+                      "surface-container-highest": "#333533",
+                      "tertiary-fixed-dim": "#ccc7ac",
+                      "on-secondary-container": "#87c979",
+                      "tertiary-fixed": "#e8e3c7",
+                      "surface-bright": "#383a37",
+                      "on-tertiary": "#33311e",
+                      "on-surface-variant": "#c0c9b9",
+                      "on-primary-fixed": "#002201",
+                      "on-error-container": "#ffdad6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "margin-desktop": "64px",
+                      "gutter": "24px",
+                      "max-width": "1440px",
+                      "margin-mobile": "20px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": ["Geist"],
+                      "label-md": ["Geist"],
+                      "body-lg": ["Hanken Grotesk"],
+                      "body-md": ["Hanken Grotesk"],
+                      "headline-md": ["Geist"],
+                      "headline-lg": ["Geist"]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "headline-md": ["32px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                      "headline-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary/30 min-h-screen overflow-hidden">
+<!-- Shared SideNavBar -->
+
+<!-- Top AppBar -->
+<header class="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2*theme(spacing.margin-desktop))] max-w-max-width z-50 glass-module rounded-full px-6 py-3 flex items-center justify-between border backdrop-blur-2xl bg-surface/20 border-white/20">
+  <div class="flex items-center gap-3">
+    <div class="w-8 h-8 rounded-full kinetic-gradient flex items-center justify-center">
+      <span class="material-symbols-outlined text-on-primary text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">eco</span>
+    </div>
+    <h1 class="font-headline-md text-xl font-semibold text-primary leading-none">Rootly</h1>
+  </div><nav class="hidden md:flex items-center gap-6 font-label-md">
+  <a href="#" class="text-on-surface-variant hover:text-primary transition-colors">Home</a>
+  <a href="#" class="text-on-surface-variant hover:text-primary transition-colors">Activity Log</a>
+  <a href="#" class="text-primary font-semibold">Voice Log</a>
+  <a href="#" class="text-on-surface-variant hover:text-primary transition-colors">Emissions</a>
+</nav>
+  <div class="flex items-center gap-4">
+    <div class="relative group hidden md:block">
+      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+      <input class="bg-surface-container-highest/30 border-none rounded-full pl-9 pr-4 py-1.5 text-xs focus:ring-1 focus:ring-primary w-48 transition-all" placeholder="Search..." type="text">
+    </div>
+    <button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
+      <span class="material-symbols-outlined text-on-surface">more_vert</span>
+    </button>
+  </div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 min-h-screen grid grid-cols-12 gap-gutter px-margin-desktop pt-28"><div class="col-span-12 mb-6">
+  <h2 class="font-headline-lg text-primary mb-2 text-6xl font-extrabold">Voice Logging</h2>
+  <p class="text-xs font-medium text-on-surface-variant/60 uppercase tracking-widest">Status: Active Session // Carbon Delta Analysis</p>
+</div>
+<!-- Center Transcription Area (8 Columns) -->
+<div class="col-span-8 flex flex-col gap-gutter pb-margin-desktop">
+<!-- Listening Header -->
+<section class="glass-module p-8 rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-6">
+<div class="relative">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center mic-glow">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: &quot;FILL&quot; 1;">mic</span>
+</div>
+<div class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-background animate-pulse"></div>
+</div>
+<div>
+<h3 class="font-headline-md text-2xl font-medium text-on-surface">Listening...</h3>
+<p class="text-outline text-sm font-label-md">Active Session: Carbon Offset Reporting</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1">
+<div class="w-1 h-4 bg-primary rounded-full animate-[bounce_1s_infinite]"></div>
+<div class="w-1 h-6 bg-primary rounded-full animate-[bounce_1.2s_infinite]"></div>
+<div class="w-1 h-3 bg-primary rounded-full animate-[bounce_0.8s_infinite]"></div>
+<div class="w-1 h-5 bg-primary rounded-full animate-[bounce_1.1s_infinite]"></div>
+</div>
+<span class="text-primary font-mono text-xs ml-2">02:23:16</span>
+</div>
+</section>
+<!-- Transcription Board -->
+<section class="glass-module flex-1 p-10 rounded-lg overflow-y-auto max-h-[500px]">
+<div class="space-y-8 font-headline-md text-on-surface">
+<p class="opacity-40 text-lg leading-relaxed">Starting session. Initializing neural acoustic engine...</p>
+<p class="text-outline text-xl leading-relaxed">User: "Execute carbon audit for the Q3 logistics pipeline. Focus on the trans-Atlantic shipping routes and identify potential fuel efficiency optimizations for the Neo-Panamax fleet."</p>
+<p class="text-primary text-3xl font-medium leading-tight border-l-4 border-primary pl-6 py-2">
+                        System: Processing logistics data. Analyzing 1,402 voyage data points. Calculating estimated carbon savings through alternative routing...
+                    </p>
+<p class="text-on-surface text-xl leading-relaxed animate-pulse">
+                        "Initial findings suggest a 12.4% reduction in emissions by adjusting heading based on real-time current tracking. Should I prepare the detailed log?"
+                    </p>
+</div>
+</section>
+<!-- Recent Logs List -->
+<section class="space-y-4">
+<h4 class="text-outline uppercase text-[11px] font-bold tracking-widest px-1">Recent Voice Logs</h4>
+<div class="grid grid-cols-1 gap-3">
+<div class="glass-module p-4 rounded-lg flex items-center justify-between hover:bg-surface-container-high transition-all cursor-pointer">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-outline">description</span>
+<div>
+<p class="text-on-surface font-medium">Q2 Logistics Report</p>
+<p class="text-outline text-xs">Yesterday, 14:20 • 4m 12s</p>
+</div>
+</div>
+<div class="flex gap-4 items-center">
+<span class="px-2 py-1 bg-secondary-container text-secondary text-[10px] rounded uppercase font-bold">-2.4t CO2</span>
+<span class="material-symbols-outlined text-outline text-sm">chevron_right</span>
+</div>
+</div>
+<div class="glass-module p-4 rounded-lg flex items-center justify-between hover:bg-surface-container-high transition-all cursor-pointer">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-outline">description</span>
+<div>
+<p class="text-on-surface font-medium">Office Energy Strategy</p>
+<p class="text-outline text-xs">Oct 24, 09:15 • 12m 45s</p>
+</div>
+</div>
+<div class="flex gap-4 items-center">
+<span class="px-2 py-1 bg-secondary-container text-secondary text-[10px] rounded uppercase font-bold">-0.8t CO2</span>
+<span class="material-symbols-outlined text-outline text-sm">chevron_right</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Sidebar Telemetry (4 Columns) -->
+<aside class="col-span-4 flex flex-col gap-gutter pb-margin-desktop">
+<!-- Technical Telemetry -->
+<div class="glass-module p-6 rounded-lg space-y-6">
+<div class="flex items-center justify-between border-b border-outline-variant pb-4">
+<span class="text-outline font-label-md">Sample Rate</span>
+<span class="text-on-surface font-mono font-medium">192 kHz / 24-bit</span>
+</div>
+<div class="flex items-center justify-between border-b border-outline-variant pb-4">
+<span class="text-outline font-label-md">Latencies</span>
+<span class="text-primary font-mono font-medium">1.2ms <span class="text-outline text-xs">Ultra</span></span>
+</div>
+<div class="flex items-center justify-between border-b border-outline-variant pb-4">
+<span class="text-outline font-label-md">Codec</span>
+<span class="text-on-surface font-mono font-medium">FLAC (Lossless)</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-outline font-label-md">Signal/Noise</span>
+<span class="text-on-surface font-mono font-medium">124 dB</span>
+</div>
+</div>
+<!-- Impact Metric Module -->
+<div class="glass-module p-6 rounded-lg overflow-hidden relative group">
+<div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary to-transparent pointer-events-none"></div>
+<div class="relative z-10">
+<div class="flex items-center gap-2 text-primary mb-4">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">eco</span>
+<span class="uppercase text-[10px] font-extrabold tracking-tighter">Carbon Saved Impact</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-lg text-6xl text-on-surface">42.8</span>
+<span class="text-outline text-lg font-medium">Tonnes</span>
+</div>
+<div class="mt-6 pt-6 border-t border-outline-variant flex items-center justify-between">
+<div>
+<p class="text-outline text-[10px] uppercase font-bold">Session Contribution</p>
+<p class="text-secondary font-medium">+1.4t this hour</p>
+</div>
+<div class="w-12 h-12 rounded-full border-2 border-primary-container flex items-center justify-center">
+<span class="text-primary font-bold text-xs">74%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Visualization Module -->
+<div class="glass-module p-6 rounded-lg flex-1">
+<h5 class="text-outline uppercase text-[10px] font-bold tracking-widest mb-4">Acoustic Signature</h5>
+<div class="h-full flex items-end gap-[2px]">
+<!-- Waveform Simulation -->
+<div class="w-full bg-primary-container/20 rounded-t-sm h-[40%]" style="height: 20%"></div>
+<div class="w-full bg-primary-container/20 rounded-t-sm h-[60%]" style="height: 35%"></div>
+<div class="w-full bg-primary-container/20 rounded-t-sm h-[80%]" style="height: 70%"></div>
+<div class="w-full bg-primary rounded-t-sm h-[100%]" style="height: 90%"></div>
+<div class="w-full bg-primary rounded-t-sm h-[70%]" style="height: 55%"></div>
+<div class="w-full bg-primary rounded-t-sm h-[90%]" style="height: 80%"></div>
+<div class="w-full bg-primary-container/20 rounded-t-sm h-[40%]" style="height: 25%"></div>
+<div class="w-full bg-primary-container/20 rounded-t-sm h-[20%]" style="height: 15%"></div>
+<div class="w-full bg-primary-container/20 rounded-t-sm h-[50%]" style="height: 40%"></div>
+<div class="w-full bg-primary rounded-t-sm h-[85%]" style="height: 75%"></div>
+<div class="w-full bg-primary rounded-t-sm h-[100%]" style="height: 95%"></div>
+<div class="w-full bg-primary-container/20 rounded-t-sm h-[60%]" style="height: 30%"></div>
+</div>
+<div class="mt-4 flex justify-between text-[10px] text-outline font-mono">
+<span class="">20Hz</span>
+<span class="">12kHz</span>
+<span class="">20kHz</span>
+</div>
+</div>
+<div class="rounded-lg overflow-hidden h-40 relative">
+<img class="w-full h-full object-cover grayscale opacity-30 hover:opacity-50 transition-opacity" data-alt="A high-tech digital representation of a network grid across a globe, rendered in deep forest greens and obsidian tones. The lighting is focused and moody, reflecting a professional command center aesthetic. Faint geometric patterns overlay the satellite imagery of Earth, suggesting global logistical tracking and environmental monitoring. The mood is sophisticated and quiet." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXgiOSvP_Z_7s3dHmSBPluye2oHjbgBTygVyxVtVT5nwz5NNVhkYuKmtW-rBH-npBvrYe-Ux7CZodTToyNsBF4LK091TdTXKYSNTEJjXFjEpYfFigi-rDnSx5_MgBoGtHYC2Ew1qnnvKFflOp-XcyHvI4CnduYbmBjUxdGbNw0YjI9kYDBg9tRbO8rEdw_Ki_4RLFZcpEDcWOEffheR2po3TDVTBB1mM0IuUyw4yJLZGkwW5mu9LLtUMhbDJXTfoo3fiUzluGBORgp">
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent"></div>
+<div class="absolute bottom-4 left-4">
+<p class="text-on-surface font-bold text-xs uppercase">Global Sync Active</p>
+<p class="text-outline text-[10px]">Data node: London-A12</p>
+</div>
+</div>
+</aside>
+</main>
+<script>
+        // Micro-interactions for the "Listening" state
+        const bars = document.querySelectorAll('.animate-\\[bounce\\]');
+        setInterval(() => {
+            bars.forEach(bar => {
+                const randomHeight = Math.floor(Math.random() * 20) + 10;
+                bar.style.height = `${randomHeight}px`;
+            });
+        }, 150);
+
+        // Simple Clock simulation for transcription log
+        function updateClock() {
+            const timeElement = document.querySelector('.font-mono.text-xs');
+            if (timeElement) {
+                let [h, m, s] = timeElement.innerText.split(':').map(Number);
+                s++;
+                if (s >= 60) { s = 0; m++; }
+                if (m >= 60) { m = 0; h++; }
+                timeElement.innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            }
+        }
+        setInterval(updateClock, 1000);
+    </script>
+
+
+
+
+
+
+
+
+</body></html>
