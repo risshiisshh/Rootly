@@ -2,7 +2,7 @@
 
 > **Hackathon Submission** // *A Premium, AI-Driven Carbon Awareness Experience*
 >
-> Built with Next.js 15 (App Router), TypeScript, Firebase Firestore, Google Cloud APIs, and Anthropic's Claude 3.5 models.
+> Built with Next.js 15 (App Router), TypeScript, Firebase Firestore, Google Cloud APIs, and Google Gemini 3.5 Flash models.
 
 ---
 
@@ -21,7 +21,7 @@ Most carbon trackers fail because they are passive calculators. They require use
 
 It functions as an **Environmental Intelligence Coach** that:
 - **Reduces Logging Friction**: Uses advanced Voice Logging to parse natural speech (e.g. *"I rode a bus for 15km and had a vegan lunch"*), extracting and calculating emissions automatically.
-- **Contextual AI Coaching**: Claude 3.5 Sonnet analyzes your historical activity log, active goals, and carbon score, acting as an interactive coach that responds to questions with custom, quantified advice.
+- **Contextual AI Coaching**: Google Gemini 3.5 Flash analyzes your historical activity log, active goals, and carbon score, acting as an interactive coach that responds to questions with custom, quantified advice.
 - **Action-Oriented Maps**: Integrates Google Maps Directions to show side-by-side transit options, automatically calculating carbon savings relative to driving.
 - **Certified Disclosures**: A server-side Export System logs export history in Firestore and dynamically compiles CSV disclosures, print-ready PDF briefs, and Google Sheets integrations suitable for ISO 14064 compliance.
 - **Privacy First**: Uses salted SHA-256 UID hashing for analytics and sanitizes all telemetry logs before storage.
@@ -53,7 +53,7 @@ graph TD
 
     %% Third Party Integrations
     subgraph Vendors [Downstream APIs]
-        Claude[Anthropic Claude API]
+        Gemini[Google Gemini API]
         Maps[Google Maps Directions]
         Speech[Google Speech-to-Text]
     end
@@ -70,7 +70,7 @@ graph TD
     Auth -->|Authorize UID| Rate
     Rate -->|Verify Schema| Zod
     Zod -->|Execute Action| Controller
-    Controller -->|LLM Queries| Claude
+    Controller -->|LLM Queries| Gemini
     Controller -->|Route Comparison| Maps
     Controller -->|Transcription| Speech
     Controller -->|Reads/Writes| Firestore
@@ -82,17 +82,17 @@ graph TD
 
 ### 🎤 A. AI-Driven Voice Logging (`/voice`)
 - **Speech-to-Text**: MediaRecorder records WebM/Opus audio, which Google Speech-to-Text transcribes.
-- **Semantic Extraction**: Claude parses the transcript, extracting categories (`transport`, `food`, etc.), activities, and quantities.
+- **Semantic Extraction**: Gemini parses the transcript, extracting categories (`transport`, `food`, etc.), activities, and quantities.
 - **Calculation**: Standard conversion factors are applied to the extracted items, presenting a preview card to the user for one-click logging.
 
 ### 🗺️ B. Transit Route Comparison (`/routes`)
 - **Directions API**: Fetches route distance, duration, and transit parameters from Google Maps.
 - **Footprint Delta**: Compares emissions across Walking, Cycling, EV Car, Petrol Car, Bus, and Train.
-- **Reasoning**: Claude provides a short summary explaining the optimal mode of transit based on travel time and carbon savings.
+- **Reasoning**: Gemini provides a short summary explaining the optimal mode of transit based on travel time and carbon savings.
 
 ### 📊 C. Weekly AI briefings (`/reports`)
 - **Ops Report**: Compiles the last 7 days of activities and compares them with the previous week.
-- **Narrative & Goals**: Claude Opus generates a narrative briefing explaining performance trends, changes in carbon scores, and suggests 3 actionable, prioritized goals (High/Medium/Low priority).
+- **Narrative & Goals**: Gemini 3.5 Flash generates a narrative briefing explaining performance trends, changes in carbon scores, and suggests 3 actionable, prioritized goals (High/Medium/Low priority).
 
 ### 📤 D. Server-Side Export System (`/exports`)
 - **Formulation**: Compiles CSV logs, PDF formatted disclosures, and Google Sheets links on the server.
@@ -200,7 +200,7 @@ npm run test:ui
 npm run test:coverage
 ```
 
-- **API Interception**: MSW mocks external API responses (Claude and Google Maps Directions) to allow testing routes offline.
+- **API Interception**: MSW mocks external API responses (Gemini and Google Maps Directions) to allow testing routes offline.
 - **Throttling Verification**: Integration tests verify that sending more than 5 export requests or 20 chat messages sequentially triggers `429 Too Many Requests`.
 
 ---
@@ -214,7 +214,3 @@ npm run test:coverage
 
 ---
 
-## 👥 9. Contributors
-
-- **Staff Engineer / Technical Writer**: Antigravity AI
-- **UI Designer**: Stitch Design Engine

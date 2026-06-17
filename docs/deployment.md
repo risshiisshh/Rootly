@@ -9,7 +9,7 @@ This document describes the steps required to deploy Rootly to a production envi
 Rootly is deployed as a hybrid frontend/backend application:
 - **Hosting**: Vercel (or any Node.js environment supporting Next.js 15).
 - **Database & Auth**: Google Firebase (Firestore Native Mode + Firebase Authentication).
-- **External Services**: Anthropic (Claude models) and Google Cloud Platform (Maps Directions API).
+- **External Services**: Google Gemini API and Google Cloud Platform (Maps Directions API).
 
 ---
 
@@ -28,7 +28,7 @@ Ensure the following environment variables are configured in your hosting dashbo
 | **Firebase Admin** | `FIREBASE_ADMIN_PROJECT_ID` | Server Only | Google Project ID |
 | | `FIREBASE_ADMIN_CLIENT_EMAIL` | Server Only | Service account IAM email address |
 | | `FIREBASE_ADMIN_PRIVATE_KEY` | Server Only | Service account private certificate (include `\n`) |
-| **AI Models** | `ANTHROPIC_API_KEY` | Server Only | Anthropic Console key |
+| **AI Models** | `GEMINI_API_KEY` | Server Only | Google Gemini API key |
 | **Google Maps** | `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`| Browser Only | Google Cloud API key (for maps UI) |
 | | `GOOGLE_MAPS_API_KEY` | Server Only | Google Cloud API key (for backend route calls) |
 | **NextAuth / Auth** | `NEXTAUTH_SECRET` | Server Only | Encryption key for session cookie tokens |

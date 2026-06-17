@@ -4,7 +4,7 @@
 
 Rootly is a premium AI-powered sustainability coach that transforms carbon footprint tracking into an intelligent, action-oriented experience. Unlike dashboards that just show data, Rootly functions as a contextual AI coach that understands your behaviour patterns and gives personalized, quantified recommendations.
 
-Built with **Next.js 15 App Router**, **TypeScript**, **Firebase**, and **Claude AI (Anthropic)**.
+Built with **Next.js 15 App Router**, **TypeScript**, **Firebase**, and **Google Gemini 3.5 Flash**.
 
 ---
 
@@ -21,7 +21,7 @@ Built with **Next.js 15 App Router**, **TypeScript**, **Firebase**, and **Claude
 - Node.js 18+
 - npm 9+
 - Firebase project (Firestore + Auth enabled)
-- Anthropic API key (Claude access)
+- Gemini API key (Gemini access)
 - Google Maps Platform API key (Directions API enabled)
 
 ### 1. Clone and install
@@ -64,12 +64,12 @@ Open [http://localhost:3000](http://localhost:3000).
 | Landing | `/` | Animated Precision Forest hero with video background |
 | Auth | `/auth/signin` | Google OAuth + email/password |
 | Dashboard | `/dashboard` | Score ring, weekly summary, quick actions |
-| AI Coach | `/coach` | Real-time chat with context-aware Claude |
+| AI Coach | `/coach` | Real-time chat with context-aware Gemini |
 | Voice Logging | `/voice` | Speak activities — AI extracts and categorises |
 | Activity Log | `/activity` | Manual log with AI-assisted parsing |
 | Route Compare | `/routes` | Compare transport options by CO₂ + Maps API |
 | Insights | `/insights` | Trend charts, monthly breakdown, patterns |
-| Weekly Report | `/reports` | Claude Opus generates narrative briefing |
+| Weekly Report | `/reports` | Gemini generates narrative briefing |
 | Goals | `/goals` | Mission objectives with circular progress |
 | Profile | `/profile` | Stats, achievements, heatmap, settings |
 | Exports | `/exports` | Download data as JSON, CSV, or PDF report |
@@ -86,7 +86,7 @@ Open [http://localhost:3000](http://localhost:3000).
 | Animation | Framer Motion |
 | Auth | Firebase Authentication |
 | Database | Cloud Firestore |
-| AI | Anthropic Claude (Sonnet 4 + Opus 4) |
+| AI | Google Gemini 3.5 Flash |
 | Maps | Google Maps Directions API |
 | State | Zustand |
 | Data fetching | TanStack React Query |
@@ -132,7 +132,7 @@ npm run test:ui  # Vitest UI mode
 
 ## Security
 
-All API keys are server-side only. The client never sees Anthropic or Google Maps keys. See [SECURITY.md](./SECURITY.md).
+All API keys are server-side only. The client never sees Gemini or Google Maps keys. See [SECURITY.md](./SECURITY.md).
 
 ---
 

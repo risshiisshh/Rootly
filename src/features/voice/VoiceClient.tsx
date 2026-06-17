@@ -567,7 +567,7 @@ export function VoiceClient() {
               { label: 'Sample Rate', value: '192 kHz' },
               { label: 'Latency', value: '< 2ms' },
               { label: 'Codec', value: 'WebM/Opus' },
-              { label: 'AI Engine', value: 'Claude Sonnet' },
+              { label: 'AI Engine', value: 'Gemini 3.5 Flash' },
             ].map((item) => (
               <div key={item.label} className="flex justify-between items-center border-b border-outline-variant/10 pb-3 last:border-0 last:pb-0">
                 <span className="font-geist text-outline text-sm">{item.label}</span>

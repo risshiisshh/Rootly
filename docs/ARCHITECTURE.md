@@ -38,8 +38,8 @@ Rootly is built as a feature-based Next.js 15 App Router application running on 
                                       ┌──────────────────┼──────────────────┐
                                       ▼                  ▼                  ▼
                               ┌───────────────┐  ┌───────────────┐  ┌───────────────┐
-                              │  Anthropic    │  │  Google Maps  │  │  Firestore    │
-                              │  (Claude APIs)│  │  (Directions) │  │  (Data Store) │
+                              │  Google       │  │  Google Maps  │  │  Firestore    │
+                              │  (Gemini API) │  │  (Directions) │  │  (Data Store) │
                               └───────────────┘  └───────────────┘  └───────────────┘
 ```
 
@@ -53,7 +53,7 @@ Rootly follows a strict decoupled data-fetch flow to ensure caching, validation,
 2. **Client-side caching**: React Query checks the local cache. If the query is fresh, it resolves instantly. If stale or a mutation is triggered, a `fetch()` is made to the Next.js API route with the user's `Authorization: Bearer <Firebase_ID_Token>` header.
 3. **Authentication & Throttling**: The Next.js API route verifies the token using the `Firebase Admin SDK` (via `verifyAuth` middleware) and enforces rate limits (via `checkRateLimit` middleware) to protect AI or downstream APIs from abuse.
 4. **Zod Validation**: Request payloads are parsed and validated at the input boundary.
-5. **Services Layer**: The controller forwards to the feature service layer, which communicates with Firestore, the Anthropic API, or Google Maps.
+5. **Services Layer**: The controller forwards to the feature service layer, which communicates with Firestore, the Google Gemini API, or Google Maps.
 6. **Return**: The API route returns a structured, typed JSON response to the client hook, which refreshes the UI state.
 
 ---
@@ -66,12 +66,12 @@ src/
 │   ├── api/                    # Server-side Next.js API Endpoints
 │   │   ├── activity/           # Logs carbon-emitting activities
 │   │   ├── analytics/          # Product metrics and aggregation telemetry
-│   │   ├── chat/               # Coach conversations with Anthropic SDK
+│   │   ├── chat/               # Coach conversations with Gemini API
 │   │   ├── exports/            # Server-side CSV/PDF/Sheets data compile
 │   │   ├── goals/              # Goals CRUD
 │   │   ├── reports/            # Weekly intelligence generation
 │   │   ├── routes/             # Route maps comparison
-│   │   └── voice/              # Audio file transcriptions & Claude extraction
+│   │   └── voice/              # Audio file transcriptions & Gemini extraction
 │   └── (app)/                  # Auth-guarded core client route group
 │
 ├── features/                   # Isolated client feature folders
@@ -101,31 +101,31 @@ src/
 
 ## 4. AI Pipelines Architecture
 
-Rootly leverages Anthropic's Claude models to orchestrate intelligence briefings, conversational coaching, and speech-to-text semantic parsing.
+Rootly leverages Google's Gemini models to orchestrate intelligence briefings, conversational coaching, and speech-to-text semantic parsing.
 
 ### A. Conversation Coach (`/api/chat`)
-- **Model**: `claude-3-5-sonnet` (low latency, high logic).
+- **Model**: `gemini-3.5-flash` (low latency, high logic).
 - **Execution Flow**:
   1. Authenticates the client token.
   2. Queries user statistics (carbon score, active goals, weekly activities).
   3. Formulates a system prompt containing the user's specific context.
-  4. Calls the Anthropic API with conversation history.
+  4. Calls the Google Gemini API with conversation history.
   5. Stores the assistant response in the user's conversation collection.
 
 ### B. Weekly Intelligence Reports (`/api/reports`)
-- **Model**: `claude-3-5-sonnet` or `claude-3-opus`.
+- **Model**: `gemini-3.5-flash` (consistently aligned with all AI integrations).
 - **Execution Flow**:
   1. Gathers the last 7 days of activities and compares them with the previous week.
-  2. Submits activities, emission breakdowns, and current goals to Claude.
-  3. Claude returns a structured JSON payload containing a narrative summary, category emissions delta, and prioritized action recommendations.
+  2. Submits activities, emission breakdowns, and current goals to Gemini.
+  3. Gemini returns a structured JSON payload containing a narrative summary, category emissions delta, and prioritized action recommendations.
   4. Saves the generated report to Firestore.
 
 ### C. Voice Activity Logger (`/api/voice`)
-- **Model**: Google Speech-to-Text + `claude-3-5-sonnet`.
+- **Model**: Google Speech-to-Text + `gemini-3.5-flash`.
 - **Execution Flow**:
   1. Receives an audio file (WebM / Opus format).
   2. Transcribes the audio into raw text.
-  3. Submits the raw transcript to Claude with instructions to extract structured activities (description, quantity, category, and transport type).
+  3. Submits the raw transcript to Gemini with instructions to extract structured activities (description, quantity, category, and transport type).
   4. Applies standard emission factors to the extractions.
   5. Returns structured items to the client for final verification.
 

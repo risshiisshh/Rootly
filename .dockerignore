@@ -1,0 +1,60 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Next.js build and export outputs
+.next/
+out/
+dist/
+build/
+.docusaurus/
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Environments and Secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.secret
+*.pem
+*.key
+google-services.json
+GoogleService-Info.plist
+
+# Testing and Coverage
+coverage/
+coverage.log
+error.log
+test-results/
+.nyc_output/
+.vitest.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# Repository and configuration files
+.git/
+.github/
+.gitignore
+.firebaserc
+firebase.json
+Dockerfile
+.dockerignore
+gcp-service.yaml
+docs/
+screens/
+scripts/
+README.md
+task.md
+walkthrough.md
+implementation_plan.md
+final_audit_report.md

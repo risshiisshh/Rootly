@@ -43,16 +43,15 @@
 
 ---
 
-## Step 3 — Anthropic API Key
+## Step 3 — Google Gemini API Key
 
-1. Go to [console.anthropic.com](https://console.anthropic.com)
+1. Go to [aistudio.google.com](https://aistudio.google.com)
 2. Create an account or sign in
-3. Go to API Keys → Create Key
-4. Save the key (shown only once)
+3. Click "Get API key" and then "Create API key"
+4. Save the key
 
 **Models used:**
-- `claude-sonnet-4-5` — real-time chat, voice extraction, route reasoning
-- `claude-opus-4-5` — weekly report generation
+- `gemini-3.5-flash` — real-time chat, voice extraction, weekly reports, route reasoning
 
 ---
 
@@ -80,8 +79,8 @@ FIREBASE_ADMIN_PROJECT_ID=your-project
 FIREBASE_ADMIN_CLIENT_EMAIL=firebase-adminsdk-xxx@your-project.iam.gserviceaccount.com
 FIREBASE_ADMIN_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nMIIEvQ...\n-----END PRIVATE KEY-----\n"
 
-# ─── Anthropic (server-side only) ────────────────────────
-ANTHROPIC_API_KEY=sk-ant-api03-...
+# ─── Google Gemini (server-side only) ────────────────────
+GEMINI_API_KEY=AQ.Ab8RN6IJXqQ7...
 
 # ─── Google Maps (server-side only) ──────────────────────
 GOOGLE_MAPS_API_KEY=AIzaSy...
@@ -150,9 +149,9 @@ The `FIREBASE_ADMIN_PRIVATE_KEY` environment variable contains literal `\n`. Mak
 1. Wrap the entire value in double quotes in `.env.local`
 2. The key content has `\n` as literal two-character sequences (not newlines)
 
-### "Claude API quota exceeded"
+### "Gemini API quota exceeded"
 
-The weekly report uses Claude Opus which has lower rate limits on free tiers. If you hit limits, switch to Sonnet in `/api/reports/route.ts`.
+If you hit API quota or rate limits on Google Gemini, check the Google AI Studio console for quota allocations and billing configurations.
 
 ### "Maps Directions API error"
 

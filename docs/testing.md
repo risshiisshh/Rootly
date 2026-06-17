@@ -9,7 +9,7 @@ This document outlines the testing strategy, frameworks, execution guidelines, m
 Rootly uses Vitest for low-latency testing, combined with testing utilities for API and UI rendering:
 
 - **Vitest**: Unit testing runner. Combines fast ES module parsing with Jest-compatible matching APIs.
-- **Mock Service Worker (MSW)**: Intercepts network calls (`fetch`) at the network layer during integration tests. This allows testing components against actual API routes without hitting real endpoints (e.g. Anthropic, Google Maps).
+- **Mock Service Worker (MSW)**: Intercepts network calls (`fetch`) at the network layer during integration tests. This allows testing components against actual API routes without hitting real endpoints (e.g. Gemini, Google Maps).
 - **React Testing Library (RTL)**: Renders and tests UI components under jsdom environment configurations.
 
 ---
@@ -42,7 +42,7 @@ src/tests/
 ├── setup.ts                    # Global vitest bootstrap & MSW lifecycle
 ├── mocks/                      # MSW handlers and json responses
 │   ├── handlers.ts             # Intercepts /api/chat, /api/voice, etc.
-│   └── responseTemplates/      # Mock payloads for Claude API calls
+│   └── responseTemplates/      # Mock payloads for Gemini API calls
 │
 ├── unit/                       # Component-level isolated logic tests
 │   ├── analytics.test.ts       # Validates tracker, hashing, batching
@@ -83,7 +83,7 @@ The test coverage report is configured in `vitest.config.ts` to output HTML repo
 ## 5. Mocking Third-Party Vendors
 
 During tests, outbound requests are stubbed to avoid API calls:
-- **Anthropic Claude Calls**: MSW intercepts POST `/api/chat` and `/api/reports` and returns pre-configured mock JSON reports.
+- **Google Gemini Calls**: MSW intercepts POST `/api/chat` and `/api/reports` and returns pre-configured mock JSON reports.
 - **Google Maps Directions**: Mocked inside `src/tests/mocks/handlers.ts` to return static route coordinates and travel distance (e.g., 4.2 km).
 - **Firebase Auth**: Verifies tokens using static stubs. The authorization token `'valid-token'` automatically resolves to a mock user record.
 - **Google Speech-to-Text**: Mocked inside `src/tests/unit/voice.test.ts` to return static transcripts when audio blobs are processed.

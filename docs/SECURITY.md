@@ -36,14 +36,14 @@ Rootly maintains a strict boundary between client-side assets and backend execut
 ┌──────────────────────────────────────┐
 │          Next.js API Server          │
 │  • FIREBASE_ADMIN_PRIVATE_KEY        │
-│  • ANTHROPIC_API_KEY (Claude SDK)    │
+│  • GEMINI_API_KEY (Gemini SDK)      │
 │  • GOOGLE_MAPS_API_KEY (Directions)  │
 │  • Verifies ID Token per request     │
 └──────────────────────────────────────┘
 ```
 
 - **Firebase Config Transparency**: The public variables (`NEXT_PUBLIC_FIREBASE_*`) are safe to expose. Firebase relies on Firestore Security Rules and Authentication checks for database isolation, not API key obscurity.
-- **Backend Key Environment**: Keys like `ANTHROPIC_API_KEY` and `FIREBASE_ADMIN_PRIVATE_KEY` are read exclusively by serverless environments on the server. They are never sent to the client browser.
+- **Backend Key Environment**: Keys like `GEMINI_API_KEY` and `FIREBASE_ADMIN_PRIVATE_KEY` are read exclusively by serverless environments on the server. They are never sent to the client browser.
 
 ---
 

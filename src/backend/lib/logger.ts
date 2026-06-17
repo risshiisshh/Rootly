@@ -3,8 +3,21 @@ type LogLevel = 'info' | 'warn' | 'error'
 class Logger {
   private formatMessage(level: LogLevel, message: string, meta?: any): string {
     const timestamp = new Date().toISOString()
-    const metaStr = meta ? ` | Meta: ${JSON.stringify(meta)}` : ''
-    return `[${timestamp}] [${level.toUpperCase()}]: ${message}${metaStr}`
+    if (process.env.NODE_ENV === 'production') {
+      const severity = level === 'warn' ? 'WARNING' : level.toUpperCase()
+      const payload: Record<string, any> = {
+        severity,
+        message,
+        timestamp,
+      }
+      if (meta) {
+        payload.meta = meta
+      }
+      return JSON.stringify(payload)
+    } else {
+      const metaStr = meta ? ` | Meta: ${JSON.stringify(meta)}` : ''
+      return `[${timestamp}] [${level.toUpperCase()}]: ${message}${metaStr}`
+    }
   }
 
   info(message: string, meta?: any) {

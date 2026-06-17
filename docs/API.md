@@ -118,7 +118,7 @@ Compares route emission factors between two geographical points using Google Map
   ```
 
 ### POST `/api/reports`
-Triggers weekly narrative calculations using Claude.
+Triggers weekly narrative calculations using Google Gemini 3.5 Flash.
 - **Request**:
   ```json
   {
@@ -223,4 +223,4 @@ Standard response payloads when operations fail:
 | `400` | `VALIDATION_ERROR` | Request schema mismatch or invalid data size (Zod failed). |
 | `401` | `UNAUTHORIZED` | Bearer token header missing, invalid, or expired. |
 | `429` | `RATE_LIMIT_EXCEEDED` | Exceeded request limit. Try again after the reset window. |
-| `500` | `INTERNAL_SERVER_ERROR` | Call to downstream vendor API (Anthropic/Google Maps) failed. |
+| `500` | `INTERNAL_SERVER_ERROR` | Call to downstream vendor API (Google Gemini/Google Maps) failed. |

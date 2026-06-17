@@ -4,7 +4,7 @@ import { SkeletonCard } from '@/components/shared/StateFeedback'
 
 export const metadata: Metadata = {
   title: 'AI Coach — Rootly',
-  description: 'Context-aware sustainability coaching powered by Claude AI. Get personalized carbon reduction recommendations based on your actual data.',
+  description: 'Context-aware sustainability coaching powered by Google Gemini. Get personalized carbon reduction recommendations based on your actual data.',
 }
 
 const CoachClient = dynamic(
