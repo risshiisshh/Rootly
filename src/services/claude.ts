@@ -142,7 +142,7 @@ export async function sendChatMessage(
   // Add the new user message
   contents.push({ role: 'user', parts: [{ text: userMessage }] })
 
-  const response = await callGemini('gemini-1.5-flash', {
+  const response = await callGemini('gemini-3.5-flash', {
     contents,
     systemInstruction: {
       parts: [{ text: systemPrompt }],
@@ -252,7 +252,7 @@ Return a JSON object with:
 
 Generate exactly 5 recommendations, ranked by impact. Be specific, not generic.`
 
-  const response = await callGemini('gemini-1.5-flash', {
+  const response = await callGemini('gemini-3.5-flash', {
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
     generationConfig: {
       temperature: 0.2,
@@ -493,7 +493,7 @@ Use these emission factors:
 
 Only include activities with quantifiable emissions. Return empty array if none found.`
 
-  const response = await callGemini('gemini-1.5-flash', {
+  const response = await callGemini('gemini-3.5-flash', {
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
     generationConfig: {
       temperature: 0.1,
@@ -540,7 +540,7 @@ ${sorted.map(o => `- ${o.mode}: ${o.emissionsKg.toFixed(1)}kg CO2, ${o.durationM
 Best option: ${best.mode} saves ${(worst.emissionsKg - best.emissionsKg).toFixed(1)}kg vs ${worst.mode}.
 Be specific about the savings and brief about why. Keep under 100 words.`
 
-  const response = await callGemini('gemini-1.5-flash', {
+  const response = await callGemini('gemini-3.5-flash', {
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
     generationConfig: {
       temperature: 0.2,

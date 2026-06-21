@@ -106,7 +106,7 @@ ${activities.map(a => `- Category: ${a.category}, Activity: ${a.activity}, Quant
 Generate a supportive, highly personalized 1-2 sentence feedback tip for the user about their carbon footprint impact. Be encouraging, reference their specific activities, and keep it under 50 words.`
 
     try {
-      const response = await callGemini('gemini-1.5-flash', {
+      const response = await callGemini('gemini-3.5-flash', {
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
         generationConfig: {
           temperature: 0.7,
