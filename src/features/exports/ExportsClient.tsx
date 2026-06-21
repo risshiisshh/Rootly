@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { useAuthStore } from '@/store/userStore'
 import { GlassCard, DotGrid } from '@/components/glass/GlassCard'
@@ -39,7 +39,7 @@ export function ExportsClient() {
   const [error, setError] = useState<string | null>(null)
   const [successMsg, setSuccessMsg] = useState<string | null>(null)
 
-  const loadHistory = async () => {
+  const loadHistory = useCallback(async () => {
     try {
       const token = firebaseUser ? await firebaseUser.getIdToken() : 'demo-token'
       const res = await fetch('/api/exports', {
@@ -55,11 +55,11 @@ export function ExportsClient() {
     } finally {
       setIsLoadingHistory(false)
     }
-  }
+  }, [firebaseUser])
 
   useEffect(() => {
     loadHistory()
-  }, [firebaseUser])
+  }, [loadHistory])
 
   const handleExport = async () => {
     setIsExporting(true)

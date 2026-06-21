@@ -5,6 +5,7 @@ import { validateBody } from '../../middleware/validate'
 import { catchAsync } from '../../errors/errorHandler'
 import { exportsRepository } from './exports.repository'
 import { exportsService } from './exports.service'
+import { adminDb, isFirebaseAdminConfigured } from '../../lib/firebaseAdmin'
 import { z } from 'zod'
 
 const createExportSchema = z.object({
@@ -40,7 +41,17 @@ export class ExportsController {
       let downloadUrl = ''
       let fileContent = ''
 
-      const userEmail = 'user@rootly.green' // Or dynamic if token returns email
+      let userEmail = 'user@rootly.green'
+      if (isFirebaseAdminConfigured) {
+        try {
+          const userDoc = await adminDb.collection('users').doc(uid).get()
+          if (userDoc.exists) {
+            userEmail = userDoc.data()?.email || userEmail
+          }
+        } catch (err) {
+          console.warn('Failed to load user email for export:', err)
+        }
+      }
 
       // 5. Generate export file representation
       if (format === 'csv') {

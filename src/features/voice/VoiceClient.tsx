@@ -51,18 +51,23 @@ export function VoiceClient() {
 
   // Clean up on unmount
   useEffect(() => {
+    const timer = timerRef.current
+    const waveform = waveformRef.current
+    const animFrame = animFrameRef.current
+    const mediaRecorder = mediaRecorderRef.current
+    const recognition = recognitionRef.current
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current)
-      if (waveformRef.current) clearInterval(waveformRef.current)
-      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current)
-      mediaRecorderRef.current?.stream?.getTracks().forEach((t) => t.stop())
-      if (recognitionRef.current) {
-        try { recognitionRef.current.stop() } catch {}
+      if (timer) clearInterval(timer)
+      if (waveform) clearInterval(waveform)
+      if (animFrame) cancelAnimationFrame(animFrame)
+      mediaRecorder?.stream?.getTracks().forEach((t) => t.stop())
+      if (recognition) {
+        try { recognition.stop() } catch {}
       }
     }
   }, [])
 
-  const processAudio = async (blob: Blob, duration: number, localTranscript?: string) => {
+  const processAudio = useCallback(async (blob: Blob, duration: number, localTranscript?: string) => {
     if (!userProfile) return
     setError(null)
     setRecordingState('processing')
@@ -152,12 +157,12 @@ export function VoiceClient() {
     } finally {
       setIsLoadingLogs(false)
     }
-  }
+  }, [userProfile])
 
   const handleRetryProcessing = useCallback(async () => {
     if (!retrySession) return
     await processAudio(retrySession.blob, retrySession.duration, retrySession.localTranscript)
-  }, [retrySession, userProfile])
+  }, [retrySession, processAudio])
 
   const startRecording = useCallback(async () => {
     setError(null)
@@ -277,7 +282,7 @@ export function VoiceClient() {
         liveRegionRef.current.textContent = `Microphone access failed: ${msg}`
       }
     }
-  }, [sessionDuration, userProfile])
+  }, [sessionDuration, processAudio])
 
   const stopRecording = useCallback(() => {
     if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null }
@@ -541,11 +546,11 @@ export function VoiceClient() {
                   <ul className="space-y-2.5 font-hanken text-xs text-on-surface-variant leading-relaxed">
                     <li className="flex gap-2">
                       <span className="font-mono text-primary font-bold">1.</span>
-                      <span>Click the <b>Lock icon</b> (🔒) or <b>settings toggle</b> on the left side of your browser's address bar.</span>
+                      <span>Click the <b>Lock icon</b> (🔒) or <b>settings toggle</b> on the left side of your browser&apos;s address bar.</span>
                     </li>
                     <li className="flex gap-2">
                       <span className="font-mono text-primary font-bold">2.</span>
-                      <span>Find the <b>Microphone</b> setting and change it from "Block" to <b>"Allow"</b>.</span>
+                      <span>Find the <b>Microphone</b> setting and change it from &quot;Block&quot; to <b>&quot;Allow&quot;</b>.</span>
                     </li>
                     <li className="flex gap-2">
                       <span className="font-mono text-primary font-bold">3.</span>

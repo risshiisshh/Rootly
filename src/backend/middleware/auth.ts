@@ -16,6 +16,9 @@ export async function verifyAuth(req: NextRequest): Promise<string> {
 
   // Demo Mode override
   if (token === 'demo-token') {
+    if (process.env.NODE_ENV === 'production' && isFirebaseAdminConfigured) {
+      throw new UnauthorizedError('Unauthorized')
+    }
     return 'demo-user-id'
   }
 

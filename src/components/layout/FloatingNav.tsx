@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
@@ -162,10 +163,13 @@ export function FloatingNav() {
                       aria-label="User menu"
                     >
                       {userProfile?.photoURL ? (
-                        <img
+                        <Image
                           src={userProfile.photoURL}
                           alt={userProfile.displayName ?? 'User'}
+                          width={28}
+                          height={28}
                           className="w-7 h-7 rounded-full border border-primary/20 object-cover"
+                          unoptimized
                         />
                       ) : (
                         <div className="w-7 h-7 rounded-full bg-primary-container flex items-center justify-center">

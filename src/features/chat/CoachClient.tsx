@@ -611,7 +611,7 @@ export function CoachClient() {
                   Google AI Studio
                   <span className="material-symbols-outlined text-[10px]">open_in_new</span>
                 </a>
-                {' '}— it's free with generous limits.
+                 {' '}— it&apos;s free with generous limits.
               </p>
             </div>
 

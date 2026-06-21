@@ -33,6 +33,34 @@ export function useVoice() {
   const animFrameRef = useRef<number | null>(null)
   const analyzerRef = useRef<AnalyserNode | null>(null)
 
+  const process = useCallback(async (blob: Blob) => {
+    try {
+      const token = await auth.currentUser?.getIdToken()
+      const fd = new FormData()
+      fd.append('audio', blob, 'recording.webm')
+      const customKey = getSafeLocalStorage('user_gemini_api_key')
+      const res = await fetch('/api/voice', {
+        method: 'POST',
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          ...(customKey ? { 'x-gemini-key': customKey } : {}),
+        },
+        body: fd,
+      })
+      if (!res.ok) throw new Error((await res.json()).error ?? 'Processing failed')
+      const data = await res.json()
+      setTranscript(data.transcript ?? '')
+      setExtracted(data.activities ?? [])
+      setState('complete')
+      analyticsTracker.track('VOICE_LOGGING', {
+        activityCount: data.activities?.length || 0,
+      })
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Processing failed')
+      setState('error')
+    }
+  }, [])
+
   const start = useCallback(async () => {
     setError(null)
     setTranscript('')
@@ -79,40 +107,12 @@ export function useVoice() {
       setError(err instanceof Error ? err.message : 'Microphone access denied')
       setState('error')
     }
-  }, [])
+  }, [process])
 
   const stop = useCallback(() => {
     if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null }
     mediaRecorderRef.current?.stop()
     setState('processing')
-  }, [])
-
-  const process = useCallback(async (blob: Blob) => {
-    try {
-      const token = await auth.currentUser?.getIdToken()
-      const fd = new FormData()
-      fd.append('audio', blob, 'recording.webm')
-      const customKey = getSafeLocalStorage('user_gemini_api_key')
-      const res = await fetch('/api/voice', {
-        method: 'POST',
-        headers: { 
-          Authorization: `Bearer ${token}`,
-          ...(customKey ? { 'x-gemini-key': customKey } : {}),
-        },
-        body: fd,
-      })
-      if (!res.ok) throw new Error((await res.json()).error ?? 'Processing failed')
-      const data = await res.json()
-      setTranscript(data.transcript ?? '')
-      setExtracted(data.activities ?? [])
-      setState('complete')
-      analyticsTracker.track('VOICE_LOGGING', {
-        activityCount: data.activities?.length || 0,
-      })
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Processing failed')
-      setState('error')
-    }
   }, [])
 
   const reset = useCallback(() => {

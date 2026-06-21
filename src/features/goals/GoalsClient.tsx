@@ -332,7 +332,7 @@ export function GoalsClient() {
       updatedAt: Timestamp.now(),
     }
     setGoals((prev) => [newGoal, ...prev])
-  }, [userProfile])
+  }, [uid])
 
   const handleDelete = useCallback(async (id: string) => {
     await deleteGoal(id).catch(console.error)
