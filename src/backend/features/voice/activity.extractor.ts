@@ -97,7 +97,7 @@ Only return raw JSON. Do not wrap in markdown blocks.`
     }
 
     try {
-      const response = await callGemini('gemini-3.5-flash', payload, customApiKey)
+      const response = await callGemini('gemini-1.5-flash', payload, customApiKey)
       const data = JSON.parse(response.text)
       
       const rawActivities = Array.isArray(data.activities) ? data.activities : []
