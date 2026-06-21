@@ -16,7 +16,9 @@ interface GoogleDirectionsResult {
   status: string
 }
 
-const MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!
+import { getClientEnv } from '@/lib/env'
+
+const MAPS_API_KEY = getClientEnv('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY')!
 
 /**
  * Get route options using Google Maps Directions API

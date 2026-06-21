@@ -2,7 +2,9 @@ import { initializeApp, getApps, cert } from 'firebase-admin/app'
 import { getAuth } from 'firebase-admin/auth'
 import { getFirestore } from 'firebase-admin/firestore'
 
-export const isFirebaseAdminConfigured = !!(
+const forceDemo = process.env.FORCE_DEMO === 'true' || process.env.NEXT_PUBLIC_FORCE_DEMO === 'true'
+
+export const isFirebaseAdminConfigured = !forceDemo && !!(
   (process.env.FIREBASE_SERVICE_ACCOUNT_KEY && process.env.FIREBASE_SERVICE_ACCOUNT_KEY !== '') || 
   (process.env.GOOGLE_APPLICATION_CREDENTIALS && process.env.GOOGLE_APPLICATION_CREDENTIALS !== '') ||
   (process.env.NODE_ENV === 'production' &&

@@ -5,6 +5,10 @@ import type { User } from '@/types/user'
 import { formatEmissions } from '@/lib/utils'
 
 export const isGeminiConfigured = (customApiKey?: string) => {
+  const forceDemo = process.env.FORCE_DEMO === 'true' || process.env.NEXT_PUBLIC_FORCE_DEMO === 'true'
+  if (forceDemo) {
+    return false
+  }
   if (customApiKey && customApiKey !== '' && customApiKey !== 'your_gemini_api_key') {
     return true
   }

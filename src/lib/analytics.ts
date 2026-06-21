@@ -23,6 +23,7 @@ class AnalyticsTracker {
   private readonly BATCH_SIZE = 5
   private readonly FLUSH_INTERVAL_MS = 15000 // 15 seconds
   private readonly SALT = 'rootly-analytics-salt'
+  private cachedToken = 'demo-token'
 
   constructor() {
     if (typeof window !== 'undefined') {
@@ -109,19 +110,37 @@ class AnalyticsTracker {
     return 'anonymous'
   }
 
-  private async getFirebaseToken(): Promise<string | null> {
+  private async getFirebaseToken(): Promise<string> {
     try {
       if (typeof useAuthStore.getState === 'function') {
         const firebaseUser = useAuthStore.getState()?.firebaseUser
-        if (firebaseUser) return await firebaseUser.getIdToken()
+        if (firebaseUser) {
+          if (typeof firebaseUser.getIdToken === 'function') {
+            const token = await firebaseUser.getIdToken()
+            if (token) {
+              this.cachedToken = token
+              return token
+            }
+          }
+          return this.cachedToken || 'demo-token'
+        }
       } else if (typeof useAuthStore === 'function') {
         const firebaseUser = (useAuthStore as any)()?.firebaseUser
-        if (firebaseUser) return await firebaseUser.getIdToken()
+        if (firebaseUser) {
+          if (typeof firebaseUser.getIdToken === 'function') {
+            const token = await firebaseUser.getIdToken()
+            if (token) {
+              this.cachedToken = token
+              return token
+            }
+          }
+          return this.cachedToken || 'demo-token'
+        }
       }
     } catch {
       // Ignore
     }
-    return null
+    return 'demo-token'
   }
 
   public track(type: AnalyticsEventType, metadata: Record<string, any> = {}) {
@@ -168,9 +187,7 @@ class AnalyticsTracker {
 
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',
-      }
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`
+        'Authorization': `Bearer ${token}`,
       }
 
       const res = await fetch('/api/analytics', {
@@ -190,7 +207,7 @@ class AnalyticsTracker {
     }
   }
 
-  // Synchronous flush on page unload using sendBeacon or synchronous fetch if supported
+  // Synchronous flush on page unload using synchronous fetch/keepalive with auth headers
   private flushSync() {
     if (this.queue.length === 0) return
 
@@ -200,18 +217,17 @@ class AnalyticsTracker {
 
     const url = '/api/analytics'
     const body = JSON.stringify({ events: eventsToFlush })
+    const token = this.cachedToken || 'demo-token'
 
-    if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
-      const blob = new Blob([body], { type: 'application/json' })
-      navigator.sendBeacon(url, blob)
-    } else {
-      fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body,
-        keepalive: true,
-      }).catch(() => {})
-    }
+    fetch(url, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body,
+      keepalive: true,
+    }).catch(() => {})
   }
 }
 

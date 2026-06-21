@@ -214,3 +214,7 @@ npm run test:coverage
 
 ---
 
+## 👥 9. Contributors
+
+- **Staff Engineer / Technical Writer**: Antigravity AI
+- **UI Designer**: Stitch Design Engine

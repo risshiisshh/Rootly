@@ -7,6 +7,7 @@ import { cn, formatEmissions } from '@/lib/utils'
 import type { RouteOption } from '@/types/route'
 import { useOnlineStatus } from '@/hooks/useOnlineStatus'
 import { ErrorState, EmptyState, SkeletonCard, SkeletonPulse } from '@/components/shared/StateFeedback'
+import { getClientEnv } from '@/lib/env'
 
 
 const MODE_ICONS: Record<string, string> = {
@@ -56,7 +57,7 @@ function MapVisualizer({
   const leafletStartMarkerRef = useRef<any>(null)
   const leafletEndMarkerRef = useRef<any>(null)
 
-  const mapsKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
+  const mapsKey = getClientEnv('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY')
   const isGoogleMapsEnabled = !!(mapsKey && mapsKey !== 'your_google_maps_api_key')
 
   // Load Google Maps API script

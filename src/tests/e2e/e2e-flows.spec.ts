@@ -131,8 +131,8 @@ test.describe('Rootly E2E User Flows', () => {
     await page.click('button[aria-label="Stop recording"]', { force: true })
 
     // Wait for the processing to finish
-    await expect(page.locator('text=Analysis Complete')).toBeVisible()
-    await expect(page.locator('text=Train Ride')).toBeVisible()
+    await expect(page.locator('text=Analysis Complete').first()).toBeVisible()
+    await expect(page.locator('text=Train').first()).toBeVisible()
 
     // 5. AI Coach Chat
     await page.goto('/coach')

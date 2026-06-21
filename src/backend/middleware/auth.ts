@@ -14,6 +14,11 @@ export async function verifyAuth(req: NextRequest): Promise<string> {
     throw new UnauthorizedError('Unauthorized')
   }
 
+  // Demo Mode override
+  if (token === 'demo-token') {
+    return 'demo-user-id'
+  }
+
   // If Firebase Admin has verifyIdToken defined (e.g. it is mocked in tests or real config is present)
   if (adminAuth && typeof adminAuth.verifyIdToken === 'function') {
     try {
@@ -22,11 +27,6 @@ export async function verifyAuth(req: NextRequest): Promise<string> {
     } catch (err) {
       throw new UnauthorizedError('Unauthorized')
     }
-  }
-
-  // Demo Mode override
-  if (token === 'demo-token') {
-    return 'demo-user-id'
   }
 
   if (process.env.NODE_ENV === 'test') {

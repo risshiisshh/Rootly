@@ -12,18 +12,19 @@ if (typeof window === 'undefined' && typeof global !== 'undefined' && 'localStor
 import { initializeApp, getApps, type FirebaseApp } from 'firebase/app'
 import { getAuth, type Auth } from 'firebase/auth'
 import { getFirestore, initializeFirestore, persistentLocalCache, persistentMultipleTabManager, type Firestore } from 'firebase/firestore'
+import { getClientEnv } from '@/lib/env'
 
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  apiKey: getClientEnv('NEXT_PUBLIC_FIREBASE_API_KEY'),
+  authDomain: getClientEnv('NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN'),
+  projectId: getClientEnv('NEXT_PUBLIC_FIREBASE_PROJECT_ID'),
+  storageBucket: getClientEnv('NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET'),
+  messagingSenderId: getClientEnv('NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID'),
+  appId: getClientEnv('NEXT_PUBLIC_FIREBASE_APP_ID'),
 }
 
-const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY
-const forceDemo = process.env.NEXT_PUBLIC_FORCE_DEMO === 'true'
+const apiKey = getClientEnv('NEXT_PUBLIC_FIREBASE_API_KEY')
+const forceDemo = getClientEnv('NEXT_PUBLIC_FORCE_DEMO') === 'true'
 export const isFirebaseConfigured = !forceDemo && !!apiKey && apiKey !== '' && apiKey !== 'your_firebase_api_key'
 
 // Initialize Firebase only when a real API key is available.

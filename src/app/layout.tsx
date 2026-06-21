@@ -5,6 +5,8 @@ import { AuthProvider } from '@/features/auth/AuthContext'
 import { FloatingNav } from '@/components/layout/FloatingNav'
 import { Providers } from './providers'
 
+export const dynamic = 'force-dynamic'
+
 const geist = Geist({
   variable: '--font-geist',
   subsets: ['latin'],
@@ -61,6 +63,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const getEnvValue = (key: string) => process.env[key];
+
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
@@ -71,6 +75,24 @@ export default function RootLayout({
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        />
+        {/* Dynamic Runtime Environment Configuration */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.ENV = {
+                NEXT_PUBLIC_FORCE_DEMO: ${JSON.stringify(getEnvValue('FORCE_DEMO') === 'true' || getEnvValue('NEXT_PUBLIC_FORCE_DEMO') === 'true' ? 'true' : 'false')},
+                NEXT_PUBLIC_FIREBASE_API_KEY: ${JSON.stringify(getEnvValue('NEXT_PUBLIC_FIREBASE_API_KEY'))},
+                NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${JSON.stringify(getEnvValue('NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN'))},
+                NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${JSON.stringify(getEnvValue('NEXT_PUBLIC_FIREBASE_PROJECT_ID'))},
+                NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${JSON.stringify(getEnvValue('NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET'))},
+                NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${JSON.stringify(getEnvValue('NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID'))},
+                NEXT_PUBLIC_FIREBASE_APP_ID: ${JSON.stringify(getEnvValue('NEXT_PUBLIC_FIREBASE_APP_ID'))},
+                NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${JSON.stringify(getEnvValue('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY'))},
+                NEXT_PUBLIC_HAS_GEMINI_KEY: ${JSON.stringify(getEnvValue('NEXT_PUBLIC_HAS_GEMINI_KEY'))},
+              };
+            `,
+          }}
         />
       </head>
       <body

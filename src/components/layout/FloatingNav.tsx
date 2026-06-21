@@ -68,7 +68,7 @@ export function FloatingNav() {
 
   return (
     <>
-      {/* Desktop floating nav */}
+      {/* Desktop & Mobile floating top header */}
       <header
         className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-5xl px-4"
         style={{ transform: 'translateX(-50%)' }}
@@ -76,21 +76,21 @@ export function FloatingNav() {
         <nav
           className={cn(
             'flex items-center justify-between',
-            'px-6 py-2.5 rounded-full',
-            'bg-surface-container/75 backdrop-blur-2xl',
-            'border border-white/[0.12] border-t-white/[0.24] border-b-black/[0.5]',
-            'shadow-[0_12px_40px_rgba(0,0,0,0.6),inset_0_1px_2px_rgba(255,255,255,0.2)]',
-            'transition-all duration-300 hover:border-white/[0.18] hover:border-t-white/[0.32] hover:shadow-[0_16px_48px_rgba(145,216,131,0.08),0_12px_40px_rgba(0,0,0,0.75),inset_0_1px_2.5px_rgba(255,255,255,0.28)]'
+            'px-6 py-2 rounded-full',
+            'bg-white/[0.03] backdrop-blur-3xl saturate-[190%]',
+            'border border-white/[0.1] border-t-white/[0.18] border-b-black/[0.4]',
+            'shadow-[0_12px_40px_rgba(0,0,0,0.65),inset_0_1px_1.5px_rgba(255,255,255,0.1)]',
+            'transition-all duration-300 hover:border-white/[0.14] hover:border-t-white/[0.24] hover:shadow-[0_16px_48px_rgba(145,216,131,0.06),0_12px_40px_rgba(0,0,0,0.7),inset_0_1px_2px_rgba(255,255,255,0.15)]'
           )}
           aria-label="Main navigation"
         >
           {/* Logo */}
           <Link
             href={isAuthenticated ? ROUTES.DASHBOARD : ROUTES.HOME}
-            className="flex items-center gap-2 shrink-0"
+            className="flex items-center gap-2 shrink-0 group"
             aria-label="Rootly home"
           >
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-container to-primary flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-container to-primary flex items-center justify-center transition-transform duration-300 group-hover:scale-105 group-hover:rotate-6">
               <span
                 className="material-symbols-outlined text-[18px] text-on-primary"
                 style={{ fontVariationSettings: '"FILL" 1' }}
@@ -99,38 +99,50 @@ export function FloatingNav() {
                 eco
               </span>
             </div>
-            <span className="font-geist text-lg font-bold text-primary leading-none tracking-tight">
+            <span className="font-geist text-lg font-bold text-primary leading-none tracking-tight transition-opacity duration-200 group-hover:opacity-90">
               Rootly
             </span>
           </Link>
 
           {/* Center nav links (desktop) */}
           {isAuthenticated ? (
-            <ul className="hidden md:flex items-center gap-1">
+            <ul className="hidden md:flex items-center gap-1.5">
               {NAV_ITEMS.map((item) => {
                 const isActive =
                   pathname === item.href ||
                   (item.href !== ROUTES.DASHBOARD && pathname.startsWith(item.href))
                 return (
-                  <li key={item.href}>
+                  <li key={item.href} className="relative">
                     <Link
                       href={item.href}
                       className={cn(
-                        'flex items-center gap-1.5 px-3 py-1.5 rounded-full',
+                        'relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-full',
                         'font-geist text-label-md transition-all duration-200',
                         isActive
-                          ? 'text-primary bg-primary/[0.08] border border-primary/[0.18] shadow-[inset_0_1px_1px_rgba(255,255,255,0.06),0_2px_8px_rgba(145,216,131,0.04)] font-semibold'
+                          ? 'text-primary font-semibold'
                           : 'text-on-surface-variant hover:text-on-surface hover:bg-white/5 border border-transparent'
                       )}
                       aria-current={isActive ? 'page' : undefined}
                     >
+                      {isActive && (
+                        <>
+                          {/* Ambient soft glow */}
+                          <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,rgba(145,216,131,0.12)_0%,transparent_75%)] blur-[2px] pointer-events-none z-0" />
+                          {/* Active capsule */}
+                          <motion.div
+                            layoutId="desktopActiveTab"
+                            className="absolute inset-0 bg-primary/[0.06] border border-primary/[0.18] rounded-full shadow-[inset_0_1px_1px_rgba(255,255,255,0.06),0_2px_8px_rgba(145,216,131,0.04)] z-0"
+                            transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+                          />
+                        </>
+                      )}
                       <span
-                        className="material-symbols-outlined text-[16px]"
+                        className="relative z-10 material-symbols-outlined text-[16px]"
                         aria-hidden="true"
                       >
                         {item.icon}
                       </span>
-                      {item.label}
+                      <span className="relative z-10">{item.label}</span>
                     </Link>
                   </li>
                 )
@@ -145,10 +157,10 @@ export function FloatingNav() {
                 {/* User avatar dropdown menu */}
                 <DropdownMenu.Root>
                   <DropdownMenu.Trigger asChild>
-                  <button
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-white/5 transition-colors focus:outline-none focus:ring-1 focus:ring-primary/30 min-h-[48px]"
-                    aria-label="User menu"
-                  >
+                    <button
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-white/5 transition-colors focus:outline-none focus:ring-1 focus:ring-primary/30 min-h-[48px]"
+                      aria-label="User menu"
+                    >
                       {userProfile?.photoURL ? (
                         <img
                           src={userProfile.photoURL}
@@ -174,10 +186,10 @@ export function FloatingNav() {
                       align="end"
                       sideOffset={8}
                       className={cn(
-                        'z-[100] min-w-[160px] rounded-2xl p-1.5',
-                        'bg-surface-container/95 backdrop-blur-2xl',
-                        'border border-white/[0.08] border-t-white/[0.16]',
-                        'shadow-[0_8px_32px_rgba(0,0,0,0.5)]',
+                        'z-[100] min-w-[170px] rounded-2xl p-1.5',
+                        'bg-white/[0.04] backdrop-blur-3xl saturate-[190%]',
+                        'border border-white/[0.1] border-t-white/[0.2] border-b-black/[0.4]',
+                        'shadow-[0_16px_40px_rgba(0,0,0,0.65),inset_0_1px_1.5px_rgba(255,255,255,0.15)]',
                         'animate-in fade-in slide-in-from-top-2 duration-200'
                       )}
                     >
@@ -186,10 +198,10 @@ export function FloatingNav() {
                           href={ROUTES.PROFILE}
                           className={cn(
                             'flex items-center gap-2 w-full px-3 py-2 rounded-xl text-left',
-                            'font-geist text-sm text-on-surface hover:bg-white/5 focus:bg-white/5 outline-none cursor-pointer transition-colors'
+                            'font-geist text-sm text-on-surface hover:bg-white/[0.06] hover:text-primary focus:bg-white/[0.06] focus:text-primary outline-none cursor-pointer transition-colors duration-200'
                           )}
                         >
-                          <span className="material-symbols-outlined text-[18px] text-primary" aria-hidden="true">
+                          <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
                             account_circle
                           </span>
                           View Profile
@@ -200,10 +212,10 @@ export function FloatingNav() {
                           href="/analytics"
                           className={cn(
                             'flex items-center gap-2 w-full px-3 py-2 rounded-xl text-left mt-0.5',
-                            'font-geist text-sm text-on-surface hover:bg-white/5 focus:bg-white/5 outline-none cursor-pointer transition-colors'
+                            'font-geist text-sm text-on-surface hover:bg-white/[0.06] hover:text-primary focus:bg-white/[0.06] focus:text-primary outline-none cursor-pointer transition-colors duration-200'
                           )}
                         >
-                          <span className="material-symbols-outlined text-[18px] text-primary" aria-hidden="true">
+                          <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
                             bar_chart
                           </span>
                           System Analytics
@@ -213,7 +225,7 @@ export function FloatingNav() {
                         onClick={handleSignOut}
                         className={cn(
                           'flex items-center gap-2 w-full px-3 py-2 rounded-xl text-left mt-0.5',
-                          'font-geist text-sm text-error hover:bg-error/10 focus:bg-error/10 outline-none cursor-pointer transition-colors'
+                          'font-geist text-sm text-error hover:bg-error/10 focus:bg-error/10 outline-none cursor-pointer transition-colors duration-200'
                         )}
                       >
                         <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
@@ -240,13 +252,7 @@ export function FloatingNav() {
                 </Link>
                 <Link
                   href={ROUTES.SIGN_IN}
-                  className={cn(
-                    'px-2.5 sm:px-4 py-1.5 rounded-full',
-                    'bg-primary text-on-primary',
-                    'font-geist text-label-md font-bold',
-                    'hover:opacity-90',
-                    'transition-all duration-200 active:scale-95 text-xs sm:text-sm'
-                  )}
+                  className="px-2.5 sm:px-4 py-1.5 rounded-full bg-primary text-on-primary font-geist text-label-md font-bold hover:opacity-90 transition-all duration-200 active:scale-95 text-xs sm:text-sm"
                 >
                   Get Started
                 </Link>
@@ -285,7 +291,7 @@ export function FloatingNav() {
             initial="hidden"
             animate="visible"
             exit="hidden"
-            className="md:hidden fixed top-20 left-4 right-4 z-40 rounded-2xl overflow-hidden bg-[rgba(18,20,18,0.95)] backdrop-blur-2xl border border-[rgba(255,255,255,0.08)] shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+            className="md:hidden fixed top-20 left-4 right-4 z-40 rounded-2xl overflow-hidden bg-white/[0.04] backdrop-blur-3xl saturate-[190%] border border-white/[0.08] border-t-white/[0.15] border-b-black/[0.4] shadow-[0_24px_48px_rgba(0,0,0,0.75),inset_0_1px_2px_rgba(255,255,255,0.08)]"
             role="dialog"
             aria-label="Mobile navigation"
           >
@@ -303,8 +309,8 @@ export function FloatingNav() {
                         'flex items-center gap-3 px-4 py-3 rounded-xl',
                         'font-geist text-body-md transition-all w-full',
                         isActive
-                          ? 'bg-primary-container/40 text-primary font-semibold'
-                          : 'text-on-surface-variant hover:bg-white/5 hover:text-on-surface'
+                          ? 'bg-primary/[0.08] border border-primary/[0.18] text-primary font-semibold'
+                          : 'text-on-surface-variant hover:bg-white/5 hover:text-on-surface border border-transparent'
                       )}
                       onClick={() => setMobileOpen(false)}
                       aria-current={isActive ? 'page' : undefined}
@@ -326,15 +332,15 @@ export function FloatingNav() {
           className={cn(
             'md:hidden fixed bottom-4 left-4 right-4 z-50',
             'rounded-full',
-            'bg-surface-container/75 backdrop-blur-2xl',
-            'border border-white/[0.12] border-t-white/[0.24] border-b-black/[0.5]',
-            'shadow-[0_12px_40px_rgba(0,0,0,0.6),inset_0_1px_2px_rgba(255,255,255,0.2)]',
+            'bg-white/[0.03] backdrop-blur-3xl saturate-[190%]',
+            'border border-white/[0.06] border-t-white/[0.12] border-b-black/[0.4]',
+            'shadow-[0_16px_40px_rgba(0,0,0,0.7),inset_0_1px_1.5px_rgba(255,255,255,0.08)]',
             'transition-all duration-300',
             'safe-area-inset-bottom'
           )}
           aria-label="Mobile bottom navigation"
         >
-          <div className="flex justify-around items-center px-2 py-1.5">
+          <div className="flex justify-around items-center px-2 py-1.5 relative">
             {NAV_ITEMS.slice(0, 5).map((item) => {
               const isActive = pathname === item.href || pathname.startsWith(item.href)
               return (
@@ -342,22 +348,32 @@ export function FloatingNav() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    'flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-full min-w-[48px] min-h-[48px] justify-center transition-all duration-200',
-                    isActive
-                      ? 'text-primary bg-primary/[0.08] border border-primary/[0.18] shadow-[inset_0_1px_1px_rgba(255,255,255,0.06),0_2px_8px_rgba(145,216,131,0.04)]'
-                      : 'text-on-surface-variant hover:text-on-surface hover:bg-white/5 border border-transparent'
+                    'relative flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-full min-w-[48px] min-h-[48px] justify-center transition-all duration-200',
+                    isActive ? 'text-primary' : 'text-on-surface-variant hover:text-on-surface'
                   )}
                   aria-label={item.label}
                   aria-current={isActive ? 'page' : undefined}
                 >
+                  {isActive && (
+                    <>
+                      {/* Organic background glow */}
+                      <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,rgba(145,216,131,0.15)_0%,transparent_70%)] blur-[4px] pointer-events-none z-0" />
+                      {/* Fluid morphing active indicator pill */}
+                      <motion.div
+                        layoutId="mobileActiveTab"
+                        className="absolute inset-0 bg-white/[0.08] border border-white/[0.12] border-t-white/[0.2] border-b-black/[0.4] rounded-full shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.15),0_4px_12px_rgba(0,0,0,0.2)] z-0"
+                        transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+                      />
+                    </>
+                  )}
                   <span
-                    className="material-symbols-outlined text-[20px]"
+                    className="relative z-10 material-symbols-outlined text-[20px]"
                     style={isActive ? { fontVariationSettings: '"FILL" 1' } : {}}
                     aria-hidden="true"
                   >
                     {item.icon}
                   </span>
-                  <span className="text-[10px] font-geist font-medium leading-tight">{item.label}</span>
+                  <span className="relative z-10 text-[10px] font-geist font-medium leading-tight">{item.label}</span>
                 </Link>
               )
             })}

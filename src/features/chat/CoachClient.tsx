@@ -8,6 +8,7 @@ import { useAuthStore } from '@/store/userStore'
 import { useChatStore } from '@/store/chatStore'
 import { GlassCard, DotGrid } from '@/components/glass/GlassCard'
 import { cn, formatRelativeTime, generateId } from '@/lib/utils'
+import { getClientEnv } from '@/lib/env'
 import { Timestamp } from 'firebase/firestore'
 import type { ChatMessage } from '@/types/chat'
 import { XaiCard } from '@/components/ai/XaiCard'
@@ -41,7 +42,7 @@ export function CoachClient() {
   // Settings modal states
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const [customApiKeyInput, setCustomApiKeyInput] = useState('')
-  const [apiKeySet, setApiKeySet] = useState(() => process.env.NEXT_PUBLIC_HAS_GEMINI_KEY === 'true')
+  const [apiKeySet, setApiKeySet] = useState(() => getClientEnv('NEXT_PUBLIC_HAS_GEMINI_KEY') === 'true')
   const [showApiKey, setShowApiKey] = useState(false)
   const [initError, setInitError] = useState<string | null>(null)
 
@@ -644,7 +645,7 @@ export function CoachClient() {
                       }
                     } catch { /* ignore */ }
                     setCustomApiKeyInput('')
-                    setApiKeySet(process.env.NEXT_PUBLIC_HAS_GEMINI_KEY === 'true')
+                    setApiKeySet(getClientEnv('NEXT_PUBLIC_HAS_GEMINI_KEY') === 'true')
                     setIsSettingsOpen(false)
                   }}
                   className="px-4 py-2.5 bg-error-container/20 hover:bg-error-container/40 border border-error/30 text-error rounded-xl font-geist text-sm transition-all"
