@@ -243,7 +243,9 @@ describe('Feature Components Integration & Render Tests', () => {
 
   it('renders AuthProvider successfully and wraps children', () => {
     render(
-      React.createElement(AuthProvider, {}, React.createElement('div', { 'data-testid': 'child' }, 'Child content'))
+      React.createElement(AuthProvider, {
+        children: React.createElement('div', { 'data-testid': 'child' }, 'Child content')
+      })
     )
     expect(screen.getByTestId('child')).toHaveTextContent('Child content')
   })

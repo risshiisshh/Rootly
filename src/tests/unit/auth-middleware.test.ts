@@ -19,11 +19,11 @@ describe('verifyAuth Middleware Unit Tests', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-    process.env.NODE_ENV = 'development'
+    ;(process.env as any).NODE_ENV = 'development'
   })
 
   afterEach(() => {
-    process.env.NODE_ENV = originalEnv
+    ;(process.env as any).NODE_ENV = originalEnv
   })
 
   it('allows demo-token in development mode', async () => {
@@ -38,7 +38,7 @@ describe('verifyAuth Middleware Unit Tests', () => {
   })
 
   it('rejects demo-token in production mode with Firebase Admin configured', async () => {
-    process.env.NODE_ENV = 'production'
+    ;(process.env as any).NODE_ENV = 'production'
     const req = new NextRequest('http://localhost:3000/api/activity', {
       headers: {
         authorization: 'Bearer demo-token',

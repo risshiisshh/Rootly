@@ -79,7 +79,7 @@ test.describe('Rootly E2E User Flows', () => {
         options: any;
         ondataavailable: any;
         onstop: any;
-        constructor(stream, options) {
+        constructor(stream: any, options?: any) {
           this.stream = stream;
           this.options = options;
           this.ondataavailable = null;

@@ -124,7 +124,7 @@ describe('Firestore Service (Fallback/Demo Mode)', () => {
   })
 
   it('saves voice logs and retrieves them', async () => {
-    const id = await createVoiceLog('demo-user', { transcript: 'I walked', audioLengthSeconds: 10 })
+    const id = await createVoiceLog('demo-user', { transcript: 'I walked', audioLengthSeconds: 10, processingStatus: 'complete', extractedActivities: [] })
     expect(id).toMatch(/^mock-voice-/)
     const logs = await getUserVoiceLogs('demo-user')
     expect(logs.find(l => l.id === id)).toBeDefined()
@@ -148,7 +148,7 @@ describe('Firestore Service (Fallback/Demo Mode)', () => {
       description: 'save carbon',
       category: 'energy',
       targetReductionKg: 10,
-      deadline: new Date(Date.now() + 10000),
+      deadline: new Date(Date.now() + 10000) as any,
     })
     expect(id).toMatch(/^mock-goal-/)
 

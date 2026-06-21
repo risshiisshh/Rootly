@@ -113,9 +113,7 @@ export function CoachClient() {
       }
     }
     init()
-    // Re-run only when userProfile.uid actually changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userProfile?.uid])
+  }, [userProfile?.uid, setConversationId, setLoading, setMessages])
 
   // Auto-scroll to bottom
   useEffect(() => {

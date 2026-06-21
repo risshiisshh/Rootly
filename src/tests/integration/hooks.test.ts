@@ -160,7 +160,7 @@ describe('React Query Integration Hooks', () => {
       description: 'Eat chicken or veg',
       category: 'food',
       targetReductionKg: 10,
-      deadline: new Date(Date.now() + 10000),
+      deadline: new Date(Date.now() + 10000) as any,
     })
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
@@ -232,11 +232,15 @@ describe('React Query Integration Hooks', () => {
 
   it('useVoice manages voice session flow', async () => {
     // Mock getUserMedia
-    navigator.mediaDevices = {
-      getUserMedia: vi.fn().mockResolvedValue({
-        getTracks: () => [{ stop: vi.fn() }],
-      }),
-    } as any
+    Object.defineProperty(navigator, 'mediaDevices', {
+      writable: true,
+      configurable: true,
+      value: {
+        getUserMedia: vi.fn().mockResolvedValue({
+          getTracks: () => [{ stop: vi.fn() }],
+        }),
+      },
+    })
 
     // Mock AudioContext and AnalyserNode
     global.AudioContext = vi.fn().mockImplementation(() => ({
@@ -277,9 +281,13 @@ describe('React Query Integration Hooks', () => {
   })
 
   it('useVoice handles start recording failure', async () => {
-    navigator.mediaDevices = {
-      getUserMedia: vi.fn().mockRejectedValue(new Error('Permission denied')),
-    } as any
+    Object.defineProperty(navigator, 'mediaDevices', {
+      writable: true,
+      configurable: true,
+      value: {
+        getUserMedia: vi.fn().mockRejectedValue(new Error('Permission denied')),
+      },
+    })
 
     const { result } = renderHook(() => useVoice())
     await act(async () => {

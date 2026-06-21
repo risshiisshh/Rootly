@@ -211,6 +211,7 @@ describe('Security Audits', () => {
         id: 'target-goal-1',
         userId: 'user-a',
         title: 'Save electricity',
+        description: 'Mock description',
         category: 'energy',
         targetReductionKg: 100,
         currentProgressKg: 10,

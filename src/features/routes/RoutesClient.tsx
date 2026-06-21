@@ -512,10 +512,10 @@ function MapVisualizer({
       </div>
 
       {/* Map Scale indicator (Bottom Left) */}
-      <div className="absolute left-3 bottom-3 z-[1000] flex items-end gap-1.5 pointer-events-none text-on-surface-variant font-mono text-[9px]">
-        <div className="flex flex-col gap-0.5">
-          <div className="h-1 w-12 border-l border-r border-b border-on-surface-variant" />
-          <span>2 km</span>
+      <div className="absolute left-3 bottom-3 z-[1000] flex items-end gap-1.5 pointer-events-none">
+        <div className="bg-black/75 backdrop-blur-sm px-2 py-1 rounded-md border border-white/10 flex flex-col gap-0.5 text-on-surface font-mono text-[9px] shadow-lg">
+          <div className="h-1 w-12 border-l border-r border-b border-on-surface" />
+          <span className="text-on-surface">2 km</span>
         </div>
       </div>
 

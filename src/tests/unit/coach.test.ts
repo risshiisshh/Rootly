@@ -40,7 +40,7 @@ describe('Carbon Coach AI System', () => {
         {
           id: 'act-1',
           userId: 'user-1',
-          category: 'transport',
+          category: 'transport' as const,
           activity: 'car',
           quantity: 100,
           emission: 19.2, // 100 * 0.192
@@ -49,7 +49,7 @@ describe('Carbon Coach AI System', () => {
         {
           id: 'act-2',
           userId: 'user-1',
-          category: 'transport',
+          category: 'transport' as const,
           activity: 'car',
           quantity: 50,
           emission: 9.6, // 50 * 0.192
