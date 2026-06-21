@@ -1,9 +1,9 @@
+/* ─── Google Fonts Import ──────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* ─── Google Fonts Import ──────────────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
 
 /* ─── Material Symbols Outlined ─────────────────────────────────────────────── */
 .material-symbols-outlined {
